@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load user_filters %}
+{% load static %}
+{% block title %}Зарегистрироваться{% endblock %}
+{% block content %}
+    {% load user_filters %}
+    {% include "includes/nav.html" %}
+    <link rel="stylesheet" href="{% static "pages/form.css" %}">
+    <main class="main container">
+
+        <div class="main__header">
+            <h1 class="main__title">Registration</h1>
+        </div>
+        <div class="form-container">
+
+
+            <form class="form" method="post" action="{% url 'signup' %}">
+
+                {% csrf_token %}
+                <div class="form__group">
+                    <label for="id_first_name" class="form__label">Name</label>
+                    <div class="form__field-group">
+                        <input type="text" name="first_name" id="id_first_name"
+                               class="form__input" value="{{ form.first_name.value|default_if_none:"" }}">
+                        <span class="form__error">{{ form.first_name.errors }}</span>
+                    </div>
+                </div>
+                <div class="form__group">
+                    <label for="id_username" class="form__label">Username</label>
+                    <div class="form__field-group">
+                        <input type="text" name="username" id="id_username"
+                               class="form__input" value={{ form.username.value|default_if_none:"" }}>
+                        <span class="form__error">{{ form.username.errors }}
+                    </span>
+                    </div>
+                </div>
+                <div class="form__group">
+                    <label for="id_email" class="form__label">Email</label>
+                    <div class="form__field-group">
+                        <input type="email" name="email" id="id_email"
+                               class="form__input" value="{{ form.email.value|default_if_none:"" }}">
+                        <span class="form__error">{{ form.email.errors }}</span>
+                    </div>
+                </div>
+                <div class="form__group">
+                    <label for="id_password"
+                           class="form__label">Password</label>
+                    <div class="form__field-group">
+                        <input type="password" name="password1"
+                               id="id_password" class="form__input">
+                        <span class="form__error">{{ form.password1.errors }}</span>
+                    </div>
+                </div>
+                <div class="form__group">
+                    <label for="id_password" class="form__label">Repeat
+                        password</label>
+                    <div class="form__field-group">
+                        <input type="password" name="password2"
+                               id="id_password2" class="form__input">
+                        <span class="form__error">{{ form.password2.errors }}</span>
+                    </div>
+                </div>
+                <div class="form__footer">
+                    <button class="button button_style_blue">Create account
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+{% endblock %}

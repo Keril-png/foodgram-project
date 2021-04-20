@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
                 ('cooktime', models.TimeField()),
                 ('slug', models.SlugField()),
                 ('author', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('ingredients', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='recipies.Ingredient')),
+                ('ingredients', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='recipes.Ingredient')),
             ],
         ),
         migrations.CreateModel(

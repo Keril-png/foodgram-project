@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load user_filters %}
+{% load static %}
+{% load cache %}
+{% block title %}Last recipes{% endblock %}
+
+
+{% block content %}
+    {% include "includes/nav.html" with index=True %}
+    <link rel="stylesheet" href="{% static "pages/index.css" %}">
+    <main class="main container">
+        <div class="main__header">
+            <h1 class="main__title">{% block header %}Все рецепты{% endblock %}</h1>
+            {% include "includes/tags.html"  with path="/"%}
+        </div>
+        <div class="card-list">
+            {% for item in page %}
+                {% include "includes/item_card.html" %}
+            {% endfor %}
+        </div>
+        {% if page %}
+            {% include "includes/pagination.html" with items=page paginator=paginator %}
+        {% endif %}
+    </main>
+{% endblock %}
