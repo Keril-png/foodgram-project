@@ -8,6 +8,7 @@ django-eml-email-backend==0.1
 django-widget-tweaks==1.4.8
 flake8==3.8.4
 flake8-django==1.1.1
+fpdf==1.7.2
 google-images-download==2.8.0
 gunicorn==20.0.4
 iniconfig==1.1.1

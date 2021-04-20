@@ -11,7 +11,7 @@
     <main class="main container">
         {% csrf_token %}
         <div class="main__header">
-            <h1 class="main__title">Shopping cart</h1>
+            <h1 class="main__title">Список покупок</h1>
         </div>
         <div class="card-list card-list_column">
             <ul class="shopping-list">
@@ -24,14 +24,13 @@
                             <h3 class="recipe__title">{{ item.title }}</h3>
                             <p class="recipe__text"><span
                                     class="icon-time"></span> {{ item.cooktime }}
-                                min.</p>
+                                мин.</p>
                         </div>
-                        <a href="{% url "remove_from_list" item.id %}" class="shopping-list__button link">remove
-                            from cart</a>
+                        <a href="{% url "remove_from_list" item.id %}" class="shopping-list__button link">убрать из покупок</a>
                     </li>
                 {% endfor %}
             </ul>
-            <a href="#">
+            <a href="{% url "pdf" %}">
                 <button class="button button_style_blue">Загрузить в PDF
                 </button>
             </a>

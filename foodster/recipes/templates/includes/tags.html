@@ -1,99 +1,10 @@
-
+{% load sub_funcs %}
 <ul class="tags">
     {% for tag in all_tags %}
         <li class="tags__item">
             <a id="{{ tag.id }}"
                class="tags__checkbox tags__checkbox_style_{{ tag.color }}{% if tag.id in tags %} tags__checkbox_active{% endif %}"
-                {% if tag.id in tags %}
-                    {% if tag.id == 1 %}
-                        {% if 2 in tags %}
-                            {% if 3 in tags %}
-                                href="?tag=2&tag=3"
-                            {% else %}
-                                href="?tag=2"
-                            {%endif%}
-                        {% else %}
-                            {% if 3 in tags %}
-                                href="?tag=3"
-                            {% else %}
-                                href="?"
-                            {%endif%}
-                        {%endif%}
-                    {% elif tag.id == 2 %}
-                        {% if 1 in tags %}
-                            {% if 3 in tags %}
-                                href="?tag=1&tag=3"
-                            {% else %}
-                                href="?tag=1"
-                            {%endif%}
-                        {% else %}
-                            {% if 3 in tags %}
-                                href="?tag=3"
-                            {% else %}
-                                href="?"
-                            {%endif%}
-                        {%endif%}
-                    {% else %}
-                        {% if 2 in tags %}
-                            {% if 1 in tags %}
-                                href="?tag=2&tag=1"
-                            {% else %}
-                                href="?tag=2"
-                            {%endif%}
-                        {% else %}
-                            {% if 1 in tags %}
-                                href="?tag=1"
-                            {% else %}
-                                href="?"
-                            {%endif%}
-                        {%endif%}
-                    {%endif%}
-                {%else%}
-                    {% if tag.id == 1 %}
-                        {% if 2 in tags %}
-                            {% if 3 in tags %}
-                                href="?tag=2&tag=3&tag=1"
-                            {% else %}
-                                href="?tag=2&tag=1"
-                            {%endif%}
-                        {% else %}
-                            {% if 3 in tags %}
-                                href="?tag=3&tag=1"
-                            {% else %}
-                                href="?&tag=1"
-                            {%endif%}
-                        {%endif%}
-                    {% elif tag.id == 2 %}
-                        {% if 1 in tags %}
-                            {% if 3 in tags %}
-                                href="?tag=2&tag=3&tag=1"
-                            {% else %}
-                                href="?tag=2&tag=1"
-                            {%endif%}
-                        {% else %}
-                            {% if 3 in tags %}
-                                href="?tag=3&tag=2"
-                            {% else %}
-                                href="?&tag=2"
-                            {%endif%}
-                        {%endif%}
-                    {% else %}
-                        {% if 2 in tags %}
-                            {% if 1 in tags %}
-                                href="?tag=2&tag=3&tag=1"
-                            {% else %}
-                                href="?tag=2&tag=3"
-                            {%endif%}
-                        {% else %}
-                            {% if 1 in tags %}
-                                href="?tag=3&tag=3"
-                            {% else %}
-                                href="?&tag=3"
-                            {%endif%}
-                        {%endif%}
-                    {% endif %}
-                    
-                {%endif%}
+               href = "{% tags_filter request tag.id %}"
                ></a>
                
             <span class="tags__label">{{ tag.name }}</span>

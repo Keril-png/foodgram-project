@@ -20,22 +20,6 @@ class LogoutView(TemplateView):
     template_name = "logged_out.html"
 
 
-class PasswordResetView(FormView):
-    template_name = "password_reset_form.html"
-
-
-class PasswordResetDoneView(TemplateView):
-    template_name = "password_reset_done.html"
-
-
-class PasswordResetConfirmView(FormView):
-    template_name = "password_reset_confirm.html"
-
-
-class PasswordResetCompleteView(TemplateView):
-    template_name = "password_reset_complete.html"
-
-
 class PasswordChangeView(FormView):
     template_name = "password_change_form.html"
 

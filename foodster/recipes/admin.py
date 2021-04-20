@@ -19,15 +19,15 @@ class TagAdmin(admin.ModelAdmin):
 
 
 class RecipeAdmin(admin.ModelAdmin):
-    list_display = ("title", "description", "author") 
-    search_fields = ("title",) 
-    list_filter = ("pub_date",) 
+    list_display = ("title", "description", "author")
+    search_fields = ("title",)
+    list_filter = ("pub_date",)
     inlines = (IngredientRecipeInLine, )
     empty_value_display = "-пусто-"
 
 
-admin.site.register(Ingredient) 
-admin.site.register(Recipe, RecipeAdmin) 
-admin.site.register(IngredientRecipe) 
-admin.site.register(Follow) 
-admin.site.register(Tag, TagAdmin) 
+admin.site.register(Ingredient)
+admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(IngredientRecipe)
+admin.site.register(Follow)
+admin.site.register(Tag, TagAdmin)

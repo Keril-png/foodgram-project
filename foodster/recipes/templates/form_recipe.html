@@ -15,9 +15,9 @@
         <span class="form-container">
             <form class="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-                    {% for error in form.errors %}
+                    {% comment %} {% for error in form.errors %}
                         {{ error }}
-                    {% endfor %}
+                    {% endfor %} {% endcomment %}
             <div class="form__group">
                 <label for="id_name" class="form__label">Название рецепта</label>
                 <div class="form__field-group">
