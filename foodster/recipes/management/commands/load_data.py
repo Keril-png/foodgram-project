@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from recipes.models import Ingredient
+from foodster.recipes.models import Ingredient
 import csv
 
 class Command(BaseCommand):
