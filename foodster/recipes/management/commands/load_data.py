@@ -8,7 +8,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         with open('recipes/data/ingredients.csv') as file:
             file_reader = csv.reader(file)
+            ingredient_count = 0
             for row in file_reader:
                 name, unit = row
                 Ingredient.objects.get_or_create(name=name, units=unit)
-                # print(name+', '+unit)
+                ingredient_count+=1
+            print(f'{ingredient_count} ingredients added.')

@@ -3,20 +3,15 @@
 {% load static %}
 {% load cache %}
 {% load sub_funcs %}
+{% block main_css %}/static/pages/single.css{% endblock %}
 {% block title %}{{ recipe.item }}{% endblock %}
 
 {% block content %}
     {% include 'includes/nav.html' %}
-    <link rel="stylesheet" href="{% static "pages/single.css" %}">
     <main class="main container">
         {% csrf_token %}
             {% is_favorite recipe request.user as favorite %}
             {% is_listed recipe request.user as in_cart %}    
-        {% comment %} {% if user.is_authenticated %}
-            {% is_favorite recipe request.user as is_really_favorite %}
-            {% is_listed recipe request.user as is_really_listed %}
-            {% is_following recipe.author.pk request.user as is_really_following %}
-        {% endif %} {% endcomment %}
         <div class="single-card" data-id="{{ recipe.pk }}"
              data-author="{{ recipe.author.pk }}">
             <img src="
@@ -62,7 +57,7 @@
                 <div class="single-card__items single-card__items_column">
                     <p class="single-card__text"><span
                             class="icon-time"></span> {{ recipe.cooktime }}
-                        min.</p>
+                        мин.</p>
                     <ul class="single-card__items">
                         <a href="{% url "author_recipes" recipe.author.username %}">
                             <li class="single-card__item"><p
@@ -71,9 +66,9 @@
                             </p></li>
                         </a>
                         {% if user.is_authenticated %}
-                            {% if request.user == recipe.author %}
+                            {% if user.is_staff or request.user == recipe.author %}
                                 <li class="single-card__item"><a
-                                        style="margin-left: 2.5em"
+                                        class="single-card__text"
                                         href="{% url "edit_recipe" recipe.id %}"
                                         class="single-card__text">Редактировать</a></li>
                             {% endif %}
@@ -83,37 +78,11 @@
                 <ul class="single-card__items">
 
                     {% if user.is_authenticated %}
-                        <li class="single-card__item">
-                            {% if in_cart  %}
-                                <button class="button button_style_light-blue-outline"
-                                    name="purchases"><span
-                                    class="icon-check button__icon"></span>Убрать из покупок
-                                </button>
-                            {% else %}
-                                <button class="button button_style_light-blue" name="purchases" 
-                                    data-out><span 
-                                    class="icon-plus button__icon"></span>Добавить в покупки
-                                </button>
-                            {% endif %}
-                        </li>
-                        <li class="single-card__item">
-                    {% if user != recipe.author%}
-                            {% if following %}
-                    <a href="{% url 'profile_unfollow' recipe.author.username %}">
-                        <button  class="button button_style_light-blue button_size_subscribe"
-                                name="subscribe" data-out="true">
-                                Отписаться
-                        </button>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'profile_follow' recipe.author.username %}">
-                        <button class="button button_style_light-blue button_size_subscribe button_style_blue"
-                                name="subscribe">
-                                Подписаться
-                        </button>
-                    </a>
+                        {% include 'includes/add_to_cart.html' with item=recipe %}
+                        {% if request.user != recipe.author %}
+                            {% include 'includes/follow_button.html' with author=recipe.author %}
                         {% endif %}
-                    {% endif %}
+
                         </li>
                     {% else %}
                         <a href="{% url "login" %}">

@@ -6,41 +6,44 @@ User = get_user_model()
 
 
 class Ingredient(models.Model):
-    name = models.TextField()
-    units = models.TextField()
+    name = models.TextField(verbose_name='ingredient_name')
+    units = models.TextField(verbose_name='units')
 
     def __str__(self):
         return self.name
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=255, verbose_name="tagname")
+    name = models.CharField(max_length=255, verbose_name='tagname')
     color = models.CharField(max_length=100, blank=True,
-                             verbose_name="tagcolor", default="")
+                             verbose_name='tagcolor', default='')
 
     def __str__(self):
         return self.name
 
 
 class Recipe(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    title = models.CharField(max_length=64)
-    image = models.ImageField(blank=True, null=True)
-    description = models.TextField()
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='author')
+    title = models.CharField(max_length=64, verbose_name='title')
+    image = models.ImageField(blank=True, null=True, verbose_name='image')
+    description = models.TextField(verbose_name='description')
     ingredients = models.ManyToManyField(
-        Ingredient, through='IngredientRecipe')
-    tags = models.ManyToManyField(Tag, related_name="recipes")
-    cooktime = models.PositiveIntegerField()
-    slug = models.SlugField()
+        Ingredient, through='IngredientRecipe', verbose_name='ingredientrecipe')
+    tags = models.ManyToManyField(Tag, related_name='recipes', verbose_name='tags')
+    cooktime = models.PositiveIntegerField(verbose_name='cooktime')
+    slug = models.SlugField(verbose_name='slug')
     pub_date = models.DateTimeField(
         auto_now_add=True,
-        db_index=True
+        db_index=True,
+        verbose_name='date'
     )
     favorite = models.ManyToManyField(User, blank=True,
-                                      related_name="favorite_recipes")
+                                      related_name='favorite_recipes',
+                                      verbose_name='favorites')
     in_list = models.ManyToManyField(User, blank=True,
-                                     related_name="listed_recipes",
-                                     default="")
+                                     related_name='listed_recipes',
+                                     default='',
+                                     verbose_name='listed')
 
     def __str__(self):
         return self.title
@@ -50,17 +53,20 @@ class IngredientRecipe(models.Model):
     ingredient = models.ForeignKey(
         Ingredient,
         on_delete=models.CASCADE,
-        related_name="ingredients")
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    value = models.IntegerField()
+        related_name='ingredients',
+        verbose_name='ingredient')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, verbose_name='recipe')
+    value = models.PositiveIntegerField(verbose_name='value')
 
 
 class Follow(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="follower")
+        related_name='follower',
+        verbose_name='follower')
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="following")
+        related_name='following',
+        verbose_name='following')

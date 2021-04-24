@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load user_filters %}
 {% load static %}
+{% block main_css %}/static/pages/form.css{% endblock %}
 {% block title %}Log in{% endblock %}
 {% block content %}
     {% include 'includes/nav.html'  with login=True %}
-    <link rel="stylesheet" href="{% static "pages/form.css" %}">
     <main class="main container">
 
         <div class="main__header">
-            <h1 class="main__title">Log in</h1>
+            <h1 class="main__title">Войти</h1>
         </div>
         <div class="form-container">
 
@@ -16,7 +16,7 @@
 
                 {% csrf_token %}
                 <div class="form__group">
-                    <label for="{{ form.username.id_for_label }}" class="form__label">Name</label>
+                    <label for="{{ form.username.id_for_label }}" class="form__label">Имя пользователя</label>
                     <div class="form__field-group">
                         {{ form.username|addclass:"form__input" }}
 
@@ -29,12 +29,12 @@
                     <div class="form__field-group">
                         {{ form.password|addclass:"form__input" }}
 
-                        <span class="form__error">{% if form.errors %}Unable to log in. Check username or password.{% endif %}</span>
+                        <span class="form__error">{% if form.errors %}Невозможно войти. Проверьте имя пользователя или пароль.{% endif %}</span>
                     </div>
                 </div>
                 <div class="form__footer">
-                    <button class="button button_style_blue">Log in</button>
-                    <a href="{% url "password_reset" %}" class="form__forgot-link">Recover password</a>
+                    <button class="button button_style_blue">Войти</button>
+                    <a href="{% url "password_reset" %}" class="form__forgot-link">Восстановить пароль</a>
                 </div>
             </form>
         </div>

@@ -7,6 +7,8 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Recipes</title>
+    <link rel="stylesheet"
+          href="{% block main_css %}/static/pages/index.css{% endblock main_css %}">
     <link rel="icon" href="/static/favicon.ico" type="image/x-icon"/>
 </head>
 <body class="body">
@@ -15,17 +17,7 @@
 {% endblock content %}
 
 
-
-<footer class="footer">
-    <div class="footer__container container">
-        <a href="{% url "index" %}" class="footer__brand link">Foodster.ru</a>
-        <ul class="footer__items">
-                <li class="footer__item"><a href="#" class="footer__link link">Об авторе </a></li>
-                <li class="footer__item"><a href="#" class="footer__link link">Технологии</a></li>
-        </ul>
-    </div>
-</footer>
-
+{% include 'includes/footer.html' %}
 
 
 {% block js %}

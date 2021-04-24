@@ -14,15 +14,6 @@ def is_listed(recipe, user):
 
 
 @register.simple_tag
-def is_in_session_cart(request, product_id):
-    cart = request.session.get("cart")
-    if cart is not None:
-        if product_id in cart:
-            return True
-    return False
-
-
-@register.simple_tag
 def listed_count(request):
     return request.user.listed_recipes.count()
 
@@ -43,14 +34,22 @@ def other_page(request, page_number):
 
 @register.simple_tag
 def tags_filter(request, id):
-    path = request.get_full_path()
-    if f'&tag={id}' in path:
-        return path.replace(f"&tag={id}", "")
-    elif f'tag={id}&' in path:
-        return path.replace(f"tag={id}&", "")
-    elif f'tag={id}' in path:
-        return path.replace(f"tag={id}", "")
-    elif path.count('tag') > 0:
-        return path + f'&tag={id}'
+    #Более простого решения через join не смогу придумать... Словарь tags из запроса странно работает, у меня с ним работать здесь не получилось
+    path = request.get_full_path()   
+    tag_ids = set()
+    while 'tag='in path:
+        index = path.find('tag=')
+        tag_ids.add(int(path[index+4]))
+        path = path[:index]+path[index+5:]
+    if id in tag_ids:
+        tag_ids.remove(id)
     else:
-        return path + f'?tag={id}'
+        tag_ids.add(id)
+    if path.count('?')==0:
+            path+='?'
+    while path[-1]!='?':
+        path = path[:-1]
+    str_tags=[]
+    for tag in tag_ids:
+        str_tags.append(f"tag={tag}")
+    return path+'&'.join(str_tags)

@@ -6,8 +6,7 @@
 
 
 {% block content %}
-    {% include "includes/nav.html" with favorites=True %}
-    <link rel="stylesheet" href="{% static "pages/index.css" %}">
+    {% include "includes/nav.html" %}
     <main class="main container">
         <div class="main__header">
             <h1 class="main__title">{% block header %}Избранное{% endblock %}</h1>
@@ -15,7 +14,7 @@
         </div>
         <div class="card-list">
             {% for item in page %}
-                {% include "includes/item_card.html" %}
+                {% include "includes/item_card.html" with item=item %}
             {% endfor %}
         </div>
         {% if page %}

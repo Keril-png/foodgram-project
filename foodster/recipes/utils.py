@@ -1,9 +1,3 @@
-import io
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.lib.units import inch
-from reportlab.pdfgen import canvas
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Recipe, Ingredient, Follow, User, IngredientRecipe, Tag
@@ -13,6 +7,7 @@ from .forms import RecipeForm
 from django.http import JsonResponse
 import json
 from django.db import transaction
+from collections import defaultdict
 
 from decimal import *
 
@@ -54,7 +49,7 @@ def union_ingredients(request):
     recipes = request.user.listed_recipes.all()
     
     items = IngredientRecipe.objects.filter(recipe__in=recipes)
-    combined_ingredients = {}
+    combined_ingredients = defaultdict(int)
     for item in items:
         ingredient_name = f"{item.ingredient.name}, {item.ingredient.units}"
         combined_ingredients[ingredient_name] = combined_ingredients.get(
@@ -62,19 +57,14 @@ def union_ingredients(request):
 
     return combined_ingredients
 
-def make_pdf(all_ingredients):
-    buffer = io.BytesIO()
+def tags_stuff(request, recipe_list):
+    tags = used_tags(request)
+    if tags:
+        recipe_list = recipe_list.filter(tags__id__in=tags).distinct()
+    return recipe_list
 
-    needed_ingredients = canvas.Canvas(buffer)
-    pdfmetrics.registerFont(TTFont('FreeSans', 'FreeSans.ttf'))
-    c = 800
-    needed_ingredients.setFont("FreeSans", 13)
-    for key, value in all_ingredients.items():
-        needed_ingredients.drawString(100, c, str(key)+': '+ str(value))
-        c-=15
-
-    needed_ingredients.showPage()
-    needed_ingredients.save()
-
-    buffer.seek(0)
-    return buffer
+def used_tags(request):
+    tags = set()
+    if "tag" in request.GET:
+        tags = set(map(int, request.GET.getlist("tag")))
+    return tags

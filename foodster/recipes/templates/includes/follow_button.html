@@ -1,0 +1,16 @@
+
+    {% if following %}
+        <a href="{% url 'profile_unfollow' author.username %}">
+            <button  class="button button_style_light-blue button_size_subscribe"
+                name="subscribe" data-out="true">
+                Отписаться
+            </button>
+        </a>
+    {% else %}
+        <a href="{% url 'profile_follow' author.username %}">
+            <button class="button button_style_light-blue button_size_subscribe button_style_blue"
+                name="subscribe">
+                Подписаться
+            </button>
+        </a>
+    {% endif %}

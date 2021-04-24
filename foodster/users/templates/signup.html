@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% load user_filters %}
 {% load static %}
+{% block main_css %}/static/pages/form.css{% endblock %}
 {% block title %}Зарегистрироваться{% endblock %}
 {% block content %}
     {% load user_filters %}
     {% include "includes/nav.html" %}
-    <link rel="stylesheet" href="{% static "pages/form.css" %}">
     <main class="main container">
 
         <div class="main__header">
-            <h1 class="main__title">Registration</h1>
+            <h1 class="main__title">Регистрация</h1>
         </div>
         <div class="form-container">
 
@@ -18,7 +18,7 @@
 
                 {% csrf_token %}
                 <div class="form__group">
-                    <label for="id_first_name" class="form__label">Name</label>
+                    <label for="id_first_name" class="form__label">Имя</label>
                     <div class="form__field-group">
                         <input type="text" name="first_name" id="id_first_name"
                                class="form__input" value="{{ form.first_name.value|default_if_none:"" }}">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="form__group">
-                    <label for="id_username" class="form__label">Username</label>
+                    <label for="id_username" class="form__label">Имя пользователя</label>
                     <div class="form__field-group">
                         <input type="text" name="username" id="id_username"
                                class="form__input" value={{ form.username.value|default_if_none:"" }}>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="form__group">
                     <label for="id_password"
-                           class="form__label">Password</label>
+                           class="form__label">Пароль</label>
                     <div class="form__field-group">
                         <input type="password" name="password1"
                                id="id_password" class="form__input">
@@ -52,8 +52,7 @@
                     </div>
                 </div>
                 <div class="form__group">
-                    <label for="id_password" class="form__label">Repeat
-                        password</label>
+                    <label for="id_password" class="form__label">Подтверждение пароля</label>
                     <div class="form__field-group">
                         <input type="password" name="password2"
                                id="id_password2" class="form__input">
@@ -61,7 +60,7 @@
                     </div>
                 </div>
                 <div class="form__footer">
-                    <button class="button button_style_blue">Create account
+                    <button class="button button_style_blue">Создать аккаунт
                     </button>
                 </div>
             </form>

@@ -2,12 +2,12 @@
 {% load user_filters %}
 {% load static %}
 {% load cache %}
+{% block main_css %}/static/pages/form.css{% endblock %}
 {% block title %}Избранное{% endblock %}
 
 
 {% block content %}
-    {% include "includes/nav.html"  with new=True %}
-    <link rel="stylesheet" href="{% static "pages/form.css" %}">
+    {% include "includes/nav.html" %}
     <main class="main container">
         <div class="main__header">
             <h1 class="main__title">{% if edit %}Редактировать рецепт{% else %}Создать рецепт{% endif %}</h1>
@@ -15,9 +15,9 @@
         <span class="form-container">
             <form class="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-                    {% comment %} {% for error in form.errors %}
+                    {% for error in form.errors %}
                         {{ error }}
-                    {% endfor %} {% endcomment %}
+                    {% endfor %}
             <div class="form__group">
                 <label for="id_name" class="form__label">Название рецепта</label>
                 <div class="form__field-group">
@@ -29,27 +29,15 @@
                 <p class="form__label">Теги</p>
                 <div class="form__field-group">
                     <div class="tags">
+                        {% for tag in all_tags %}
                             <div class="tags__item">
                                 <input type="checkbox" name="tags"
-                                       id="id_tags_0" value="1"
-                                       class="tags__checkbox tags__checkbox_style_orange"
-                                       {% if 1 in form.tags.value %}checked{% endif %}>
-                                <label for="id_tags_0" class="tags__label">Breakfast</label>
+                                       id="id_tags_0" value="{{tag.id}}"
+                                       class="tags__checkbox tags__checkbox_style_{{tag.color}}"
+                                       {% if tag.id in form.tags.value %}checked{% endif %}>
+                                <label for="id_tags_0" class="tags__label">{{tag.name}}</label>
                             </div>
-                            <div class="tags__item">
-                                <input type="checkbox" name="tags"
-                                       id="id_tags_1" value="2"
-                                       class="tags__checkbox tags__checkbox_style_green"
-                                       {% if 2 in form.tags.value %}checked{% endif %}>
-                                <label for="id_tags_1" class="tags__label">Lunch</label>
-                            </div>
-                            <div class="tags__item">
-                                <input type="checkbox" name="tags"
-                                       id="id_tags_2" value="3"
-                                       class="tags__checkbox tags__checkbox_style_purple"
-                                       {% if 3 in form.tags.value %}checked{% endif %}>
-                                <label for="id_tags_2" class="tags__label">Dinner</label>
-                            </div>
+                        {% endfor %}
                     </div>
                     <span class="form__error"></span>
                 </div>
@@ -98,8 +86,7 @@
                 <div class=" form__footer">
                     <button class="button button_style_blue">Сохранить</button>
                         {% if edit %}
-                            <a style="margin-left: 2.5em" href="
-                        {{ request.get_full_path }}delete/"
+                            <a style="margin-left: 2.5em" href="{% url 'delete' recipe.id %}"
                                class="form__ingredient-link">Удалить</a>
                         {% endif %}
                 </div>

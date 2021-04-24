@@ -2,12 +2,12 @@
 {% load user_filters %}
 {% load static %}
 {% load cache %}
+{% block main_css %}/static/pages/shopList.css{% endblock %}
 {% block title %}Список покупок{% endblock %}
 
 
 {% block content %}
-    {% include "includes/nav.html"  with shop_list=True %}
-    <link rel="stylesheet" href="{% static "pages/shopList.css" %}">
+    {% include "includes/nav.html" %}
     <main class="main container">
         {% csrf_token %}
         <div class="main__header">
@@ -30,7 +30,7 @@
                     </li>
                 {% endfor %}
             </ul>
-            <a href="{% url "pdf" %}">
+            <a href="{% url "get_pdf" %}">
                 <button class="button button_style_blue">Загрузить в PDF
                 </button>
             </a>

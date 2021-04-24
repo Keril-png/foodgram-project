@@ -6,34 +6,19 @@
 
 {% block content %}
     {% load sub_funcs %}
-    {% include 'includes/nav.html' with profile=True%}
-    <link rel="stylesheet" href="{% static "pages/index.css" %}">
+    {% include 'includes/nav.html' %}
     <main class="main container">
         {% csrf_token %}
         <div class="main__header">
             <h1 class="main__title">{{ author }}</h1>
-            {% include 'includes/tags.html' with path="{{request.user.username}}/"%}
+            {% include 'includes/tags.html' %}
 
         </div>
         <div class="author-subscribe" data-author="{{ author.id }}">
             <p style="padding: 0 0 2em 0;">
                 {% if user.is_authenticated %}
                     {% if author.username != request.user.username %} 
-                    {% if following %}
-                    <a href="{% url 'profile_unfollow' author.username %}">
-                        <button  class="button button_style_light-blue button_size_subscribe"
-                                name="subscribe" data-out="true">
-                                Отписаться
-                        </button>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'profile_follow' author.username %}">
-                        <button href="{% url 'profile_follow' author.username %}" class="button button_style_light-blue button_size_subscribe button_style_blue"
-                                name="subscribe">
-                                Подписаться
-                        </button>
-                    </a>
-                    {% endif %}
+                        {% include 'includes/follow_button.html' with author=author %}
                     {% endif %}
                 {% else %}
                     <a href="{% url "login" %}">
@@ -48,7 +33,7 @@
         </div>
         <div class="card-list">
             {% for item in page %}
-                {% include "includes/item_card.html" %}
+                {% include "includes/item_card.html" with item=item %}
             {% endfor %}
         </div>
         {% if page %}
