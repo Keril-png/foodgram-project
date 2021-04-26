@@ -11,6 +11,20 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+# import environ
+# env = environ.Env()
+# environ.Env.read_env()
+# from dotenv import find_dotenv, load_dotenv
+
+# load_dotenv(find_dotenv())
+
+# import platform, os
+    
+# dbHost = ""
+# if platform.system() == "Linux": # Linux means running inside Ubuntu in docker in my case.
+#     dbHost = "db" # or use .env file
+# else:
+#     dbHost = "localhost" 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -82,6 +96,21 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+# DATABASES = {
+#     'default': env.db(), # описываем, где искать настройки доступа к базе
+# } 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': os.environ.get('DB_ENGINE', default='django.db.backends.postgresql'),
+#         'NAME': os.environ.get('DB_NAME', default='postgres'),
+#         'USER': os.environ.get('POSTGRES_USER', default='postgres'),
+#         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default='1234qwerty'),
+#         'HOST': os.environ.get('DB_HOST', default='db'),
+#         'PORT': os.environ.get('DB_PORT', default='5432'),
+#     }
+# }
 
 
 # Password validation
@@ -117,25 +146,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-# STATIC_URL = '/static/'
-
-# TEMPLATE_CONTEXT_PROCESSORS = [
-#     'django.core.context_processors.static'
-# ]
-# TEMPLATE_CONTEXT_PROCESSORS = (
-#     "django.core.context_processors.auth",
-#     "django.core.context_processors.debug",
-#     "django.core.context_processors.i18n",
-#     "django.core.context_processors.media",
-#     "myapp.processor.foos",
-# )
-
-
-# STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = [

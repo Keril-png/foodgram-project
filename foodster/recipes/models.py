@@ -56,7 +56,7 @@ class IngredientRecipe(models.Model):
         related_name='ingredients',
         verbose_name='ingredient')
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, verbose_name='recipe')
-    value = models.PositiveIntegerField(verbose_name='value')
+    value = models.PositiveIntegerField(verbose_name='value', null=True)
 
 
 class Follow(models.Model):
