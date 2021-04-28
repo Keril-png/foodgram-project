@@ -4,18 +4,16 @@
 {% load cache %}
 {% load sub_funcs %}
 {% block main_css %}/static/pages/single.css{% endblock %}
-{% block title %}{{ recipe.item }}{% endblock %}
+{% block title %}{{ recipe.title }}{% endblock %}
 
 {% block content %}
-    {% include 'includes/nav.html' %}
     <main class="main container">
         {% csrf_token %}
             {% is_favorite recipe request.user as favorite %}
             {% is_listed recipe request.user as in_cart %}    
         <div class="single-card" data-id="{{ recipe.pk }}"
              data-author="{{ recipe.author.pk }}">
-            <img src="
-                    {% if recipe.image %}{{ recipe.image.url }}{% else %}/static/nophoto.jpg{% endif %}"
+            <img src="{{ recipe.image.url }}"
                  alt="{{ recipe.title }}"
                  class="single-card__image">
             <div class="single-card__info">
@@ -40,9 +38,6 @@
                                         name="favorites"><span
                                         class="icon-favorite icon-favorite_big "></span>
                                 </button>
-                                <div class="single-card__favorite-tooltip tooltip">
-                                    Добавить в избранное
-                                </div>
                             </a>
                         {% endif %}
                     </div>
@@ -77,35 +72,14 @@
                 </div>
                 <ul class="single-card__items">
 
-                    {% if user.is_authenticated %}
+                    
                         {% include 'includes/add_to_cart.html' with item=recipe %}
                         {% if request.user != recipe.author %}
                             {% include 'includes/follow_button.html' with author=recipe.author %}
                         {% endif %}
 
                         </li>
-                    {% else %}
-                        <a href="{% url "login" %}">
-                        <li class="single-card__item">
-                        
-                            <button class="button button_style_light-blue" name="purchases" 
-                                    data-out><span 
-                                    class="icon-plus button__icon"></span>Добавить в покупки
-                            </button>
-                        </li>
-                        </a>
-                        
-                        <a href="{% url "login" %}">
-                            <li class="single-card__item">
-                                <button class="button button_style_light-blue button_size_subscribe"
-                                        name="subscribe"
-                                        data-out="true">
-                                    Подписаться
-                                </button>
-                            </li>
-
-                        </a>
-                    {% endif %}
+                    
                 </ul>
                 <div class="single-card__section">
                     <h3 class="single-card__section-title">Ингредиенты:</h3>

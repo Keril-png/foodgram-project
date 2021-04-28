@@ -37,13 +37,7 @@ class Recipe(models.Model):
         db_index=True,
         verbose_name='date'
     )
-    favorite = models.ManyToManyField(User, blank=True,
-                                      related_name='favorite_recipes',
-                                      verbose_name='favorites')
-    in_list = models.ManyToManyField(User, blank=True,
-                                     related_name='listed_recipes',
-                                     default='',
-                                     verbose_name='listed')
+    
 
     def __str__(self):
         return self.title
@@ -70,3 +64,30 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='following',
         verbose_name='following')
+
+
+class Favorite(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='my_user',
+        verbose_name='user')
+    recipe = models.ForeignKey(Recipe, blank=True,
+        on_delete=models.CASCADE,
+        related_name='favorite_recipes',
+        default='',
+        verbose_name='favorites')
+
+
+class Cart(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='user',
+        verbose_name='user')
+    recipe = models.ForeignKey(Recipe, blank=True,
+        on_delete=models.CASCADE,
+        related_name='listed_recipes',
+        default='',
+        verbose_name='listed_recipes')
+

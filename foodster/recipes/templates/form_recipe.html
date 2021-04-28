@@ -3,11 +3,9 @@
 {% load static %}
 {% load cache %}
 {% block main_css %}/static/pages/form.css{% endblock %}
-{% block title %}Избранное{% endblock %}
-
+{% block title %}{% if edit %}Редактировать рецепт{% else %}Создать рецепт{% endif %}{% endblock %}
 
 {% block content %}
-    {% include "includes/nav.html" %}
     <main class="main container">
         <div class="main__header">
             <h1 class="main__title">{% if edit %}Редактировать рецепт{% else %}Создать рецепт{% endif %}</h1>
@@ -32,7 +30,7 @@
                         {% for tag in all_tags %}
                             <div class="tags__item">
                                 <input type="checkbox" name="tags"
-                                       id="id_tags_0" value="{{tag.id}}"
+                                       id="id_tags_{{tag.id}}" value="{{tag.id}}"
                                        class="tags__checkbox tags__checkbox_style_{{tag.color}}"
                                        {% if tag.id in form.tags.value %}checked{% endif %}>
                                 <label for="id_tags_0" class="tags__label">{{tag.name}}</label>

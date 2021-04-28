@@ -4,15 +4,12 @@
 {% load cache %}
 {% block main_css %}/static/pages/shopList.css{% endblock %}
 {% block title %}Список покупок{% endblock %}
+{% block header %}Список покупок{% endblock %}
 
 
 {% block content %}
-    {% include "includes/nav.html" %}
     <main class="main container">
         {% csrf_token %}
-        <div class="main__header">
-            <h1 class="main__title">Список покупок</h1>
-        </div>
         <div class="card-list card-list_column">
             <ul class="shopping-list">
                 {% for item in recipes %}

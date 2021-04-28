@@ -6,16 +6,22 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Recipes</title>
+    <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet"
           href="{% block main_css %}/static/pages/index.css{% endblock main_css %}">
     <link rel="icon" href="/static/favicon.ico" type="image/x-icon"/>
 </head>
 <body class="body">
+{% include "includes/nav.html" %}
+<main class="main container">
+<div class="main__header">
+    <h1 class="main__title">{% block header %}{% endblock %}</h1>
+    {% include "includes/tags.html"  %}
+</div>
 {% block content %}
 
 {% endblock content %}
-
+</main>
 
 {% include 'includes/footer.html' %}
 

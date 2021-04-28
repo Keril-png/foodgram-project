@@ -3,31 +3,17 @@
 {% load static %}
 {% load cache %}
 {% block title %}Последние обновления {{ author.username }}{% endblock %}
-
+{% block header %}{{ author }}{% endblock %}
 {% block content %}
     {% load sub_funcs %}
-    {% include 'includes/nav.html' %}
     <main class="main container">
         {% csrf_token %}
-        <div class="main__header">
-            <h1 class="main__title">{{ author }}</h1>
-            {% include 'includes/tags.html' %}
-
-        </div>
+        
         <div class="author-subscribe" data-author="{{ author.id }}">
             <p style="padding: 0 0 2em 0;">
-                {% if user.is_authenticated %}
-                    {% if author.username != request.user.username %} 
+                    {% if author.username != request.user.username and user.is_authenticated%} 
                         {% include 'includes/follow_button.html' with author=author %}
                     {% endif %}
-                {% else %}
-                    <a href="{% url "login" %}">
-                        <button class="button button_style_light-blue
-                button_size_subscribe" name="subscribe_not_logged" data-out="true">
-                            Подписаться
-                        </button>
-                    </a>
-                {% endif %}
                 
             </p>
         </div>

@@ -2,16 +2,13 @@
 {% load user_filters %}
 {% load static %}
 {% load cache %}
-{% block title %}Last recipes{% endblock %}
+{% block title %}Все рецепты{% endblock %}
+{% block header %}Все рецепты{% endblock %}
 
 
 {% block content %}
-    {% include "includes/nav.html" %}
     <main class="main container">
-        <div class="main__header">
-            <h1 class="main__title">{% block header %}Все рецепты{% endblock %}</h1>
-            {% include "includes/tags.html" %}
-        </div>
+        
         <div class="card-list">
             {% for item in page %}
                 {% include "includes/item_card.html" with item=item %}

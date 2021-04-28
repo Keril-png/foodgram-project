@@ -3,15 +3,6 @@
 {% load static %}
 {% block main_css %}/static/pages/form.css{% endblock %}
 {% block title %}Logged out{% endblock %}
-
+{% block header %}Заходите еще{% endblock %}
 {% block content %}
-    {% include 'includes/nav.html'  with logout=True %}
-    <main class="main container">
-        <div class="custom-center-block">
-            <div class="main__header">
-                <h1 class="main__title">Заходите еще</h1>
-            </div>
-        </div>
-    </main>
-
 {% endblock %}

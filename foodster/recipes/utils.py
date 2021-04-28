@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Recipe, Ingredient, Follow, User, IngredientRecipe, Tag
+from .models import Recipe, Ingredient, Follow, User, IngredientRecipe, Tag, Cart
 from django.core.paginator import Paginator
 from django.views.decorators.cache import cache_page
 from .forms import RecipeForm
@@ -16,8 +16,8 @@ def get_ingredients(request):
     ingredients = {}
     post = request.POST
     for key, name in post.items():
-        if key.startswith("nameIngredient"):
-            num = key.partition("_")[-1]
+        if key.startswith('nameIngredient'):
+            num = key.partition('_')[-1]
             ingredients[name] = post[f'valueIngredient_{num}']
     return ingredients
 
@@ -38,7 +38,7 @@ def save_recipe(request, form):
                 IngredientRecipe(
                     recipe=recipe,
                     ingredient=ingredient,
-                    value=Decimal(quantity.replace(',', '.'))
+                    value=quantity.replace(',', '.')
                 )
             )
         IngredientRecipe.objects.bulk_create(objs)
@@ -46,16 +46,18 @@ def save_recipe(request, form):
         return recipe
 
 def union_ingredients(request):
-    recipes = request.user.listed_recipes.all()
+    carts = Cart.objects.filter(user = request.user)
+    recipes = [cart.recipe for cart in carts]
     
     items = IngredientRecipe.objects.filter(recipe__in=recipes)
     combined_ingredients = defaultdict(int)
     for item in items:
-        ingredient_name = f"{item.ingredient.name}, {item.ingredient.units}"
+        ingredient_name = f'{item.ingredient.name}, {item.ingredient.units}'
         combined_ingredients[ingredient_name] = combined_ingredients.get(
             ingredient_name, 0) + item.value
 
     return combined_ingredients
+
 
 def tags_stuff(request, recipe_list):
     tags = used_tags(request)
@@ -63,8 +65,9 @@ def tags_stuff(request, recipe_list):
         recipe_list = recipe_list.filter(tags__id__in=tags).distinct()
     return recipe_list
 
+
 def used_tags(request):
     tags = set()
-    if "tag" in request.GET:
-        tags = set(map(int, request.GET.getlist("tag")))
+    if 'tag' in request.GET:
+        tags = set(map(int, request.GET.getlist('tag')))
     return tags
