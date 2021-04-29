@@ -9,8 +9,6 @@ import json
 from django.db import transaction
 from collections import defaultdict
 
-from decimal import *
-
 
 def get_ingredients(request):
     ingredients = {}
@@ -38,7 +36,7 @@ def save_recipe(request, form):
                 IngredientRecipe(
                     recipe=recipe,
                     ingredient=ingredient,
-                    value=quantity.replace(',', '.')
+                    value=quantity
                 )
             )
         IngredientRecipe.objects.bulk_create(objs)

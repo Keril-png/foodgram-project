@@ -3,8 +3,10 @@
 {% load static %}
 {% load cache %}
 {% block title %}Подписки{% endblock %}
-{% block header %}Подписки{% endblock %}
-
+{% block header %}
+    <h1 class="main__title">Подписки</h1>
+    {% include "includes/tags.html"  %}
+{% endblock %}
 {% block content %}
     <main class="main container">
         

@@ -4,7 +4,9 @@
 {% load cache %}
 {% block main_css %}/static/pages/shopList.css{% endblock %}
 {% block title %}Список покупок{% endblock %}
-{% block header %}Список покупок{% endblock %}
+{% block header %}
+    <h1 class="main__title">Список покупок</h1>
+{% endblock %}
 
 
 {% block content %}
@@ -27,11 +29,12 @@
                     </li>
                 {% endfor %}
             </ul>
-            <a href="{% url "get_pdf" %}">
-                <button class="button button_style_blue">Загрузить в PDF
-                </button>
-            </a>
-
+            {% if recipes %}    
+                <a href="{% url "get_pdf" %}">
+                    <button class="button button_style_blue">Загрузить в PDF
+                    </button>
+                </a>
+            {% endif %}
 
         </div>
     </main>

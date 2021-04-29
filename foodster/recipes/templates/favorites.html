@@ -3,8 +3,11 @@
 {% load static %}
 {% load cache %}
 {% block title %}Избранное{% endblock %}
+{% block header %}
+    <h1 class="main__title">Избранное</h1>
+    {% include "includes/tags.html"  %}
+{% endblock %}
 
-{% block header %}Избранное{% endblock %}
 {% block content %}
     <main class="main container">
         

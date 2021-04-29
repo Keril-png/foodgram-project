@@ -1,7 +1,6 @@
 {% load sub_funcs %}
 {% if user.is_authenticated %}
-    {% is_listed item request.user as in_cart %}
-    {% if in_cart %}
+    {% if request|is_listed:item %}
         <button class="button button_style_light-blue-outline"
             name="purchases"><span
             class="icon-check button__icon"></span>Убрать из покупок

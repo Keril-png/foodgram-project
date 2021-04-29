@@ -1,7 +1,4 @@
 {% load sub_funcs %}
-{% if user.is_authenticated %}
-    {% is_favorite item request.user as favorite %}
-{% endif %}
 {% csrf_token %}
 <div class="card" data-id="{{ item.id }}">
     <a href="{% url "single" item.id %}" class="link" target="_blank"><img

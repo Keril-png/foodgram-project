@@ -3,7 +3,11 @@
 {% load static %}
 {% load cache %}
 {% block title %}Последние обновления {{ author.username }}{% endblock %}
-{% block header %}{{ author }}{% endblock %}
+{% block header %}
+    <h1 class="main__title">{{ author }}</h1>
+    {% include "includes/tags.html"  %}
+{% endblock %}
+
 {% block content %}
     {% load sub_funcs %}
     <main class="main container">
@@ -11,10 +15,7 @@
         
         <div class="author-subscribe" data-author="{{ author.id }}">
             <p style="padding: 0 0 2em 0;">
-                    {% if author.username != request.user.username and user.is_authenticated%} 
                         {% include 'includes/follow_button.html' with author=author %}
-                    {% endif %}
-                
             </p>
         </div>
         <div class="card-list">

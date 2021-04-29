@@ -59,13 +59,9 @@ def follow_index(request):
 @login_required
 def favorite(request):
     favorites = Favorite.objects.filter(user = request.user)
-    
     recipe_list = [favorite.recipe for favorite in favorites]
-
     recipe_list = tags_stuff(request, recipe_list)
-
     paginator = Paginator(recipe_list, 10)
-
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     return render(request,
@@ -90,7 +86,10 @@ def ingredients(request):
                 'title': ingredient['name'], 
                 'dimension': ingredient['units']
             } 
-        for ingredient in ingredients], safe=False)
+        for ingredient in ingredients
+        ], 
+        safe=False
+    )
 
 
 def author_recipes(request, username):
@@ -187,7 +186,7 @@ def delete_recipe(request, recipe_id):
 
 def single_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    amounts = IngredientRecipe.objects.filter(recipe=recipe)
+    amounts = recipe.ingredient_recipe.filter(recipe=recipe)
 
     return render(
         request,
@@ -255,8 +254,9 @@ def add_to_favorites(request):
 @login_required
 def remove_from_favorites(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    if Favorite.objects.filter(user=request.user, recipe=recipe).exists():
-        Favorite.objects.filter(user=request.user, recipe=recipe).delete()
+    favorite = Favorite.objects.filter(user=request.user, recipe=recipe)
+    if favorite.exists():
+        favorite.delete()
     return redirect('index')
 
 
@@ -266,7 +266,6 @@ def add_to_list(request):
     body = json.loads(body_unicode)
     recipe_id = int(body['id'])
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    # recipe.in_list.add(request.user)
     if not Cart.objects.filter(user=request.user, recipe=recipe).exists():
         Cart.objects.create(user=request.user, recipe=recipe)
     return redirect('shoplist')
@@ -275,7 +274,9 @@ def add_to_list(request):
 @login_required
 def remove_from_list(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    recipe.in_list.clear()
+    cart = Cart.objects.filter(user=request.user, recipe=recipe)
+    if cart.exists():
+        cart.delete()
     return redirect('shoplist')
 
 

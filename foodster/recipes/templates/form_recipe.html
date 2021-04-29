@@ -4,12 +4,11 @@
 {% load cache %}
 {% block main_css %}/static/pages/form.css{% endblock %}
 {% block title %}{% if edit %}Редактировать рецепт{% else %}Создать рецепт{% endif %}{% endblock %}
-
+{% block header %}
+    <h1 class="main__title">{% if edit %}Редактировать рецепт{% else %}Создать рецепт{% endif %}</h1>
+{% endblock %}
 {% block content %}
     <main class="main container">
-        <div class="main__header">
-            <h1 class="main__title">{% if edit %}Редактировать рецепт{% else %}Создать рецепт{% endif %}</h1>
-        </div>
         <span class="form-container">
             <form class="form" method="post" enctype="multipart/form-data">
             {% csrf_token %}

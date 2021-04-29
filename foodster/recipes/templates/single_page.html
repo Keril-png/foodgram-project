@@ -9,8 +9,6 @@
 {% block content %}
     <main class="main container">
         {% csrf_token %}
-            {% is_favorite recipe request.user as favorite %}
-            {% is_listed recipe request.user as in_cart %}    
         <div class="single-card" data-id="{{ recipe.pk }}"
              data-author="{{ recipe.author.pk }}">
             <img src="{{ recipe.image.url }}"
@@ -22,11 +20,11 @@
                     <div class="single-card__favorite">
                         {% if user.is_authenticated %}
                             <button class="button button_style_none" name="favorites"
-                                    {% if not favorite %}data-out = 'true'{% endif %}><span
-                                    class="icon-favorite icon-favorite_big {% if favorite %}icon-favorite_active{% endif %}"></span>
+                                    {% if not request|is_favorite:recipe %}data-out = 'true'{% endif %}><span
+                                    class="icon-favorite icon-favorite_big {% if request|is_favorite:recipe %}icon-favorite_active{% endif %}"></span>
                             </button>
                             <div class="single-card__favorite-tooltip tooltip">
-                                {% if favorite %}
+                                {% if request|is_favorite:recipe %}
                                     Удалить из избранного
                                 {% else %}
                                     Добавить в избранное
@@ -44,8 +42,8 @@
                 </div>
                 <ul class="single-card__items">
                     {% for tag in recipe.tags.all %}
-                        <li class="single-card__item"><span
-                                class="badge badge_style_{{ tag.color }}">{{ tag.name }}</span>
+                        <li class="single-card__item">
+                            <span class="badge badge_style_{{ tag.color }}">{{ tag.name }}</span>
                         </li>
                     {% endfor %}
                 </ul>
@@ -71,15 +69,8 @@
                     </ul>
                 </div>
                 <ul class="single-card__items">
-
-                    
                         {% include 'includes/add_to_cart.html' with item=recipe %}
-                        {% if request.user != recipe.author %}
-                            {% include 'includes/follow_button.html' with author=recipe.author %}
-                        {% endif %}
-
-                        </li>
-                    
+                        {% include 'includes/follow_button.html' with author=recipe.author %}
                 </ul>
                 <div class="single-card__section">
                     <h3 class="single-card__section-title">Ингредиенты:</h3>

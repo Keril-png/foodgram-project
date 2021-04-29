@@ -49,7 +49,7 @@ class IngredientRecipe(models.Model):
         on_delete=models.CASCADE,
         related_name='ingredients',
         verbose_name='ingredient')
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, verbose_name='recipe')
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,related_name='ingredient_recipe', verbose_name='recipe')
     value = models.PositiveIntegerField(verbose_name='value', null=True)
 
 
@@ -64,6 +64,10 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='following',
         verbose_name='following')
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields= ['user','author'], name='unique follow'),
+        ]
 
 
 class Favorite(models.Model):
@@ -77,6 +81,10 @@ class Favorite(models.Model):
         related_name='favorite_recipes',
         default='',
         verbose_name='favorites')
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields= ['user','recipe'], name='unique favorite'),
+        ]
 
 
 class Cart(models.Model):
@@ -90,4 +98,8 @@ class Cart(models.Model):
         related_name='listed_recipes',
         default='',
         verbose_name='listed_recipes')
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields= ['user','recipe'], name='unique cart'),
+        ]
 
