@@ -1,6 +1,6 @@
 from django import template
 from urllib.parse import urlencode
-from recipes.models import Follow, Favorite, Cart
+from recipes.models import Follow, Favorite, Cart, Recipe
 
 register = template.Library()
 
@@ -17,6 +17,21 @@ def is_listed(request, recipe):
 @register.simple_tag
 def listed_count(request):
     return Cart.objects.filter(user=request.user).count()
+
+
+@register.filter
+def author_recipes_left(author):
+    if Recipe.objects.filter(author=author).count()<=3:
+        return False
+    return True
+
+
+@register.simple_tag
+def author_recipes_left_count(author):
+    return Recipe.objects.filter(author=author).count()-3
+
+
+
 
 
 @register.simple_tag

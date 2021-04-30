@@ -11,6 +11,7 @@ Font_size = 13
 start_coordinates = 800
 delta_coordinates = 15
 
+
 def make_pdf(all_ingredients):
     buffer = io.BytesIO()
     needed_ingredients = canvas.Canvas(buffer)

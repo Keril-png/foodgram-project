@@ -18,26 +18,7 @@
                 <div class="single-card__header-info">
                     <h1 class="single-card__title">{{ recipe.title }}</h1>
                     <div class="single-card__favorite">
-                        {% if user.is_authenticated %}
-                            <button class="button button_style_none" name="favorites"
-                                    {% if not request|is_favorite:recipe %}data-out = 'true'{% endif %}><span
-                                    class="icon-favorite icon-favorite_big {% if request|is_favorite:recipe %}icon-favorite_active{% endif %}"></span>
-                            </button>
-                            <div class="single-card__favorite-tooltip tooltip">
-                                {% if request|is_favorite:recipe %}
-                                    Удалить из избранного
-                                {% else %}
-                                    Добавить в избранное
-                                {% endif %}
-                            </div>
-                        {% else %}
-                            <a href="{% url "login" %}">
-                                <button class="button button_style_none"
-                                        name="favorites"><span
-                                        class="icon-favorite icon-favorite_big "></span>
-                                </button>
-                            </a>
-                        {% endif %}
+                        {% include "includes/add_to_favorites_big.html" %}
                     </div>
                 </div>
                 <ul class="single-card__items">
@@ -75,7 +56,7 @@
                 <div class="single-card__section">
                     <h3 class="single-card__section-title">Ингредиенты:</h3>
                     <div class="single-card__items single-card__items_column">
-                        {% for amount in amounts.all %}
+                        {% for amount in recipe.ingredient_recipe.all %}
                             <p class=" single-card__section-item">{{ amount.ingredient.name }}
                                 - {{ amount.value }} {{ amount.ingredient.units }}</p>
                         {% endfor %}

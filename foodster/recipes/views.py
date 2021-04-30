@@ -20,7 +20,6 @@ def index(request):
 
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    
 
     return render(request,
                   'index.html',
@@ -38,10 +37,12 @@ def follow_index(request):
     recipe_list = Recipe.objects.order_by('-pub_date').filter(
         author__following__user=request.user
     )
-    
+
     recipe_list = tags_stuff(request, recipe_list)
 
-    paginator = Paginator(recipe_list, 10)
+    follows = Follow.objects.filter(user=request.user)
+    user_list = [follow.author for follow in follows]
+    paginator = Paginator(user_list, 10)
 
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -58,8 +59,7 @@ def follow_index(request):
 
 @login_required
 def favorite(request):
-    favorites = Favorite.objects.filter(user = request.user)
-    recipe_list = [favorite.recipe for favorite in favorites]
+    recipe_list = Recipe.objects.filter(favorite_recipes__user=request.user)
     recipe_list = tags_stuff(request, recipe_list)
     paginator = Paginator(recipe_list, 10)
     page_number = request.GET.get('page')
@@ -79,15 +79,15 @@ def ingredients(request):
     name = request.GET['query']
     ingredients = Ingredient.objects.filter(
         name__istartswith=name
-        ).values('name', 'units')
+    ).values('name', 'units')
     return JsonResponse(
         [
             {
-                'title': ingredient['name'], 
+                'title': ingredient['name'],
                 'dimension': ingredient['units']
-            } 
-        for ingredient in ingredients
-        ], 
+            }
+            for ingredient in ingredients
+        ],
         safe=False
     )
 
@@ -99,19 +99,11 @@ def author_recipes(request, username):
         'author',
     ).order_by('-pub_date').filter(author=author)
 
-    
     recipe_list = tags_stuff(request, recipe_list)
     paginator = Paginator(recipe_list, 10)
 
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-
-    following = (
-        request.user.is_authenticated and Follow.objects.filter(
-            user=request.user,
-            author=author
-        ).exists()
-    )
 
     return render(
         request,
@@ -122,7 +114,6 @@ def author_recipes(request, username):
             'author': author,
             'all_tags': Tag.objects.all(),
             'tags': used_tags(request),
-            'following': following,
         }
     )
 
@@ -130,11 +121,11 @@ def author_recipes(request, username):
 @login_required
 def new_recipe(request):
     form = RecipeForm(request.POST or None, files=request.FILES or None)
-    
+
     if form.is_valid():
         new = save_recipe(request, form)
         return redirect('index')
-    
+
     return render(
         request,
         'form_recipe.html',
@@ -178,7 +169,7 @@ def edit_recipe(request, recipe_id):
 @login_required()
 def delete_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    
+
     if recipe.author == request.user:
         recipe.delete()
     return redirect(reverse('index'))
@@ -186,22 +177,19 @@ def delete_recipe(request, recipe_id):
 
 def single_recipe(request, recipe_id):
     recipe = get_object_or_404(Recipe, id=recipe_id)
-    amounts = recipe.ingredient_recipe.filter(recipe=recipe)
 
     return render(
         request,
         'single_page.html',
         {
             'recipe': recipe,
-            'amounts': amounts,
         }
     )
 
 
 def shoplist(request):
     if request.user.is_authenticated:
-        carts = Cart.objects.filter(user = request.user)
-        recipes = [cart.recipe for cart in carts]
+        recipes = Recipe.objects.filter(listed_recipes__user=request.user)
     else:
         if request.session.get('cart') is not None:
             cart = request.session.get('cart')
@@ -248,7 +236,6 @@ def add_to_favorites(request):
     if not Favorite.objects.filter(user=request.user, recipe=recipe).exists():
         Favorite.objects.create(user=request.user, recipe=recipe)
     return redirect('index')
-
 
 
 @login_required

@@ -8,6 +8,7 @@ from django.http import JsonResponse
 import json
 from django.db import transaction
 from collections import defaultdict
+from django.db.models import Sum, Max
 
 
 def get_ingredients(request):
@@ -43,13 +44,17 @@ def save_recipe(request, form):
         form.save_m2m()
         return recipe
 
+
 def union_ingredients(request):
-    carts = Cart.objects.filter(user = request.user)
-    recipes = [cart.recipe for cart in carts]
     
-    items = IngredientRecipe.objects.filter(recipe__in=recipes)
+    recipes = Recipe.objects.filter(listed_recipes__user=request.user)
+
     combined_ingredients = defaultdict(int)
+
+    items = IngredientRecipe.objects.filter(recipe__in=recipes) # Пока не смог понять как правильно и проще сделать это через аннотации и values:(
+    
     for item in items:
+
         ingredient_name = f'{item.ingredient.name}, {item.ingredient.units}'
         combined_ingredients[ingredient_name] = combined_ingredients.get(
             ingredient_name, 0) + item.value

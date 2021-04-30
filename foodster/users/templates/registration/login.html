@@ -9,14 +9,9 @@
 {% endblock %}
 {% block content %}
     <main class="main container">
-
-        
         <div class="form-container">
-
             <form class="form" method="post" action="{% url 'login' %}">
-
                 {% csrf_token %}
-                
                 {% include 'includes/user_form.html' %}
                 <div class="form__footer">
                     <button class="button button_style_blue">Войти</button>

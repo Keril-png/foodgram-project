@@ -2,17 +2,17 @@
 {% load user_filters %}
 {% load static %}
 {% load cache %}
+{% block main_css %}/static/pages/myFollow.css{% endblock %}
 {% block title %}Подписки{% endblock %}
 {% block header %}
     <h1 class="main__title">Подписки</h1>
-    {% include "includes/tags.html"  %}
 {% endblock %}
 {% block content %}
     <main class="main container">
         
         <div class="card-list">
-            {% for item in page %}
-                {% include "includes/item_card.html" with item=item %}
+            {% for author in page %}
+                {% include "includes/user_card.html" with author=author %}
             {% endfor %}
         </div>
         {% if page %}

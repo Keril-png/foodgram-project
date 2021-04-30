@@ -23,13 +23,20 @@ class Tag(models.Model):
 
 
 class Recipe(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='author')
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='recipes',
+        verbose_name='author')
     title = models.CharField(max_length=64, verbose_name='title')
     image = models.ImageField(blank=True, null=True, verbose_name='image')
     description = models.TextField(verbose_name='description')
     ingredients = models.ManyToManyField(
-        Ingredient, through='IngredientRecipe', verbose_name='ingredientrecipe')
-    tags = models.ManyToManyField(Tag, related_name='recipes', verbose_name='tags')
+        Ingredient,
+        through='IngredientRecipe',
+        verbose_name='ingredientrecipe')
+    tags = models.ManyToManyField(
+        Tag, related_name='recipes', verbose_name='tags')
     cooktime = models.PositiveIntegerField(verbose_name='cooktime')
     slug = models.SlugField(verbose_name='slug')
     pub_date = models.DateTimeField(
@@ -37,7 +44,6 @@ class Recipe(models.Model):
         db_index=True,
         verbose_name='date'
     )
-    
 
     def __str__(self):
         return self.title
@@ -49,7 +55,11 @@ class IngredientRecipe(models.Model):
         on_delete=models.CASCADE,
         related_name='ingredients',
         verbose_name='ingredient')
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE,related_name='ingredient_recipe', verbose_name='recipe')
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='ingredient_recipe',
+        verbose_name='recipe')
     value = models.PositiveIntegerField(verbose_name='value', null=True)
 
 
@@ -64,9 +74,14 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='following',
         verbose_name='following')
+
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields= ['user','author'], name='unique follow'),
+            models.UniqueConstraint(
+                fields=[
+                    'user',
+                    'author'],
+                name='unique follow'),
         ]
 
 
@@ -77,13 +92,18 @@ class Favorite(models.Model):
         related_name='my_user',
         verbose_name='user')
     recipe = models.ForeignKey(Recipe, blank=True,
-        on_delete=models.CASCADE,
-        related_name='favorite_recipes',
-        default='',
-        verbose_name='favorites')
+                               on_delete=models.CASCADE,
+                               related_name='favorite_recipes',
+                               default='',
+                               verbose_name='favorites')
+
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields= ['user','recipe'], name='unique favorite'),
+            models.UniqueConstraint(
+                fields=[
+                    'user',
+                    'recipe'],
+                name='unique favorite'),
         ]
 
 
@@ -94,12 +114,16 @@ class Cart(models.Model):
         related_name='user',
         verbose_name='user')
     recipe = models.ForeignKey(Recipe, blank=True,
-        on_delete=models.CASCADE,
-        related_name='listed_recipes',
-        default='',
-        verbose_name='listed_recipes')
+                               on_delete=models.CASCADE,
+                               related_name='listed_recipes',
+                               default='',
+                               verbose_name='listed_recipes')
+
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields= ['user','recipe'], name='unique cart'),
+            models.UniqueConstraint(
+                fields=[
+                    'user',
+                    'recipe'],
+                name='unique cart'),
         ]
-

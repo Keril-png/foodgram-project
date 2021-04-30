@@ -5,8 +5,7 @@
                     class="icon-favorite {% if request|is_favorite:item %}icon-favorite_active{% endif %}"></span>
     </button>
 {% else %}
-    <a href="{% url "login" %}">
-        <button class="button button_style_none" name="favorites"
-            data-out><span class="icon-favorite"></span></button>
-    </a>
+        <button class="button button_style_none" name="favorites"data-out>
+            <span class="icon-favorite"></span>
+        </button>
 {% endif %}
