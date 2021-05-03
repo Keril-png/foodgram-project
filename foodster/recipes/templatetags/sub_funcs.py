@@ -4,6 +4,7 @@ from recipes.models import Follow, Favorite, Cart, Recipe
 
 register = template.Library()
 
+@register.simple_tag
 @register.filter
 def is_favorite(request, recipe):
     return Favorite.objects.filter(user=request.user, recipe=recipe).exists()

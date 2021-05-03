@@ -1,21 +1,20 @@
 {% load sub_funcs %}
+{% is_favorite request recipe as favorite %}
 {% if user.is_authenticated %}
     <button class="button button_style_none" name="favorites"
-        {% if not request|is_favorite:recipe %}data-out = 'true'{% endif %}><span
-        class="icon-favorite icon-favorite_big {% if request|is_favorite:recipe %}icon-favorite_active{% endif %}"></span>
+        {% if not favorite %}data-out = 'true'{% endif %}><span
+        class="icon-favorite icon-favorite_big {% if favorite %}icon-favorite_active{% endif %}"></span>
     </button>
     <div class="single-card__favorite-tooltip tooltip">
-        {% if request|is_favorite:recipe %}
+        {% if favorite %}
             Удалить из избранного
         {% else %}
             Добавить в избранное
         {% endif %}
     </div>
 {% else %}
-    <a href="{% url "login" %}">
-        <button class="button button_style_none"
-            name="favorites"><span
-            class="icon-favorite icon-favorite_big "></span>
-        </button>
-    </a>
+    <button class="button button_style_none"
+        name="favorites"><span
+        class="icon-favorite icon-favorite_big "></span>
+    </button>
 {% endif %}

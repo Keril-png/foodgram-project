@@ -1,29 +1,30 @@
 {% load sub_funcs %}
 {% csrf_token %}
+{% author_recipes_left_count author as recipes_count %}
 <div class="card-user" data-author="7091">
-            <div class="card-user__header">
-                <h2 class="card-user__title">{{author.username}}</h2>
-            </div>
-            <div class="card-user__body">
-                <ul class="card-user__items">
-                    
-                        {% for recipe in author.recipes.all|slice:":3" %}
-                            <li class="card-user__item">
-                                <div class="recipe">
-                                    <img src="{{ recipe.image.url }}" alt="какой-то-текст" class="recipe__image">
-                                    <h3 class="recipe__title">{{recipe.title}}</h3>
-                                    <p class="recipe__text"><span class="icon-time"></span>{{recipe.cooktime}} мин.</p>
-                                </div>
-                            </li>
-                        {% endfor %}
-                    {% if author|author_recipes_left %}
-                        <li class="card-user__item">
-                            <a href="{% url "author_recipes" author.username %}" class="card-user__link link">Еще {% author_recipes_left_count author %} рецептов...</a>
-                        </li> 
-                    {% endif %}
-                </ul>
-            </div>
-            <div class="card-user__footer">
-                {% include 'includes/follow_button.html' with author=author %}
-            </div>
-        </div>
+    <div class="card-user__header">
+        <h2 class="card-user__title">{{author.username}}</h2>
+    </div>
+    <div class="card-user__body">
+        <ul class="card-user__items">
+            {% for recipe in author.recipes.all|slice:":3" %}
+                <li class="card-user__item">
+                    <div class="recipe">
+                        <img src="{{ recipe.image.url }}" alt="какой-то-текст" class="recipe__image">
+                        <h3 class="recipe__title">{{recipe.title}}</h3>
+                        <p class="recipe__text"><span class="icon-time"></span>{{recipe.cooktime}} мин.</p>
+                    </div>
+                </li>
+            {% endfor %}
+            {% if author|author_recipes_left %}
+                <li class="card-user__item">
+                    <a href="{% url "author_recipes" author.username %}" 
+                        class="card-user__link link">Еще {{ recipes_count }} {% if recipes_count == 1 %}рецепт{% elif recipes_count < 5 %}рецепта{% else %}рецептов{% endif %}...</a>
+                </li> 
+            {% endif %}
+        </ul>
+    </div>
+    <div class="card-user__footer">
+        {% include 'includes/follow_button.html' with author=author %}
+    </div>
+</div>

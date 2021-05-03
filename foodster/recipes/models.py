@@ -111,13 +111,14 @@ class Cart(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='user',
+        related_name='user_purchases',
         verbose_name='user')
-    recipe = models.ForeignKey(Recipe, blank=True,
-                               on_delete=models.CASCADE,
-                               related_name='listed_recipes',
-                               default='',
-                               verbose_name='listed_recipes')
+    recipe = models.ForeignKey(
+        Recipe, blank=True,
+        on_delete=models.CASCADE,
+        related_name='listed_recipes',
+        default='',
+        verbose_name='listed_recipes')
 
     class Meta:
         constraints = [
