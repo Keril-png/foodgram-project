@@ -206,25 +206,23 @@ def shoplist(request):
 
 
 @login_required
-def profile_follow(request, username):
-    author = get_object_or_404(User, username=username)
-    samefollow = Follow.objects.filter(user=request.user, author=author)
-
-    if request.user != author and not samefollow.exists():
-        Follow.objects.create(
-            user=request.user,
-            author=author
-        )
-    return redirect('author_recipes', username=username)
+def profile_follow(request):
+    body_unicode = request.body.decode('utf-8')
+    body = json.loads(body_unicode)
+    author_id = int(body['id'])
+    author = get_object_or_404(User, id=author_id)
+    if not Follow.objects.filter(user=request.user, author=author).exists():
+        Follow.objects.create(user=request.user, author=author)
+    return redirect('author_recipes', username=author.username)
 
 
 @login_required
-def profile_unfollow(request, username):
-    author = get_object_or_404(User, username=username)
-    follows = Follow.objects.filter(user=request.user, author=author)
-    if follows.exists():
-        follows.delete()
-    return redirect('author_recipes', username=username)
+def profile_unfollow(request, author_id):
+    author = get_object_or_404(User, id=author_id)
+    follow = Follow.objects.filter(user=request.user, author=author)
+    if follow.exists():
+        follow.delete()
+    return redirect('author_recipes', username=author.username)
 
 
 @login_required

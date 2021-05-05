@@ -46,16 +46,18 @@ def save_recipe(request, form):
 
 
 def union_ingredients(request):
-    recipes = Recipe.objects.filter(listed_recipes__user=request.user)
-    combined_ingredients = defaultdict(int)
-    items = request.user.user_purchases.values(
-        'recipe__ingredient_recipe__ingredient__name',
-        'recipe__ingredient_recipe__ingredient__units'
+    combined_ingredients = {}
+    items = IngredientRecipe.objects.filter(
+        recipe__listed_recipes__user=request.user
+    ).values(
+        'ingredient__name', 
+        'ingredient__units'
     ).annotate(
-        amount=Sum('recipe__ingredient_recipe__value')
+        amount=Sum('value')
     ).all()
+
     for item in items:
-        ingredient_name = f'{item["recipe__ingredient_recipe__ingredient__name"]}, {item["recipe__ingredient_recipe__ingredient__units"]}'
+        ingredient_name = f'{item["ingredient__name"]}, {item["ingredient__units"]}'
         combined_ingredients[ingredient_name] = item['amount']
 
     return combined_ingredients

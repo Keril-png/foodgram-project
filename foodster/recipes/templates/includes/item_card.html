@@ -1,26 +1,23 @@
 {% load sub_funcs %}
 {% csrf_token %}
 <div class="card" data-id="{{ item.id }}">
-    <a href="{% url "single" item.id %}" class="link" target="_blank"><img
-            src="{{ item.image.url }}"
-            alt="{{ item.name }}"
-            class="card__image"></a>
+    <a href="{% url "single" item.id %}" class="link" target="_blank">
+        <img src="{{ item.image.url }}" alt="{{ item.name }}" class="card__image">
+    </a>
     <div class="card__body">
-        <a class="card__title link" 
-           target="_blank">{{ item.title }}</a>
+        <a class="card__title link" target="_blank">{{ item.title }}</a>
         <ul class="card__items">
             {% for tag in item.tags.all %}
-                <li class="card__item"><span
-                        class="badge badge_style_{{ tag.color }}">{{ tag.name }}</span>
+                <li class="card__item">
+                    <span class="badge badge_style_{{ tag.color }}">{{ tag.name }}</span>
                 </li>
             {% endfor %}
         </ul>
         <div class="card__items card__items_column">
-            <p class="card__text"><span
-                    class="icon-time"></span> {{ item.cooktime }} мин.</p>
-            <p class="card__text"><span class="icon-user"></span> <a 
-                    href="{% url "author_recipes" item.author.username %}" style="color:
-                    black">{{ item.author.username }}</a>
+            <p class="card__text">
+                <span class="icon-time"></span> {{ item.cooktime }} мин.</p>
+            <p class="card__text"><span class="icon-user"></span> 
+                <a href="{% url "author_recipes" item.author.username %}" style="color: black">{{ item.author.username }}</a>
             </p>
         </div>
     </div>

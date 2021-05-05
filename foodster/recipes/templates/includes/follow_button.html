@@ -1,23 +1,13 @@
 {% load sub_funcs %}
-{% if author.username != user.username and user.is_authenticated %} 
-    {% if request.user|followed:author %}
-        <a href="{% url 'profile_unfollow' author.username %}">
-            <button  class="button button_style_light-blue button_size_subscribe"
-                name="subscribe" data-out="true">
-                Отписаться
-            </button>
-        </a>
-    {% else %}
-        <a href="{% url 'profile_follow' author.username %}">
-            <button class="button button_style_light-blue button_size_subscribe button_style_blue"
-                name="subscribe">
-                Подписаться
-            </button>
-        </a>
-    {% endif %}
-{% elif not user.is_authenticated %}
-        <button class="button button_style_light-blue
-            button_size_subscribe" name="subscribe_not_logged" data-out="true">
-            Подписаться
-        </button>
+{% if author.username != user.username and user.is_authenticated and request.user|followed:author %}
+    <button  class="button button_style_light-blue button_size_subscribe"
+        name="subscribe">
+        Отписаться
+    </button>
+{% else %}
+    <button class="button button_style_light-blue button_size_subscribe button_style_blue"
+        name="subscribe" data-out="true">
+        Подписаться
+    </button>
 {% endif %}
+

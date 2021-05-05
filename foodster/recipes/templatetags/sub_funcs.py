@@ -29,10 +29,13 @@ def author_recipes_left(author):
 
 @register.simple_tag
 def author_recipes_left_count(author):
-    return Recipe.objects.filter(author=author).count()-3
-
-
-
+    recipes_count = Recipe.objects.filter(author=author).count()-3
+    if recipes_count%10 == 1:
+        return f'Еще {recipes_count} рецепт...'
+    elif recipes_count%10 < 5:
+        return f'Еще {recipes_count} рецепта...'
+    else:
+        return f'Еще {recipes_count} рецептов...'
 
 
 @register.simple_tag

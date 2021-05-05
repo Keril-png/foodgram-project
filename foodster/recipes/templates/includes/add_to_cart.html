@@ -1,20 +1,10 @@
 {% load sub_funcs %}
-{% if user.is_authenticated %}
-    {% if request|is_listed:item %}
-        <button class="button button_style_light-blue-outline"
-            name="purchases"><span
-            class="icon-check button__icon"></span>Убрать из покупок
-        </button>
-    {% else %}
-        <button class="button button_style_light-blue" 
-            name="purchases" 
-            data-out><span 
-            class="icon-plus button__icon"></span>Добавить в покупки
-        </button>
-    {% endif %}
+{% if user.is_authenticated and request|is_listed:item %}
+    <button class="button button_style_light-blue-outline" name="purchases">
+        <span class="icon-check button__icon"></span>Убрать из покупок
+    </button>
 {% else %}
-        <button class="button button_style_light-blue" name="purchases" 
-                data-out><span 
-                class="icon-plus button__icon"></span>Добавить в покупки
-        </button>
+    <button class="button button_style_light-blue" name="purchases" data-out>
+        <span class="icon-plus button__icon"></span>Добавить в покупки
+    </button>
 {% endif %}

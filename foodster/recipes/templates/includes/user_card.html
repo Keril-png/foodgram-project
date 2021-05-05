@@ -19,7 +19,7 @@
             {% if author|author_recipes_left %}
                 <li class="card-user__item">
                     <a href="{% url "author_recipes" author.username %}" 
-                        class="card-user__link link">Еще {{ recipes_count }} {% if recipes_count == 1 %}рецепт{% elif recipes_count < 5 %}рецепта{% else %}рецептов{% endif %}...</a>
+                        class="card-user__link link">{{ recipes_count }}</a>
                 </li> 
             {% endif %}
         </ul>
