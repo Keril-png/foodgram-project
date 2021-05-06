@@ -16,7 +16,7 @@
                     </div>
                 </li>
             {% endfor %}
-            {% if author|author_recipes_left %}
+            {% if author.recipes.all.count > 3 %}
                 <li class="card-user__item">
                     <a href="{% url "author_recipes" author.username %}" 
                         class="card-user__link link">{{ recipes_count }}</a>

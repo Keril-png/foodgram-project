@@ -4,6 +4,7 @@ from recipes.models import Follow, Favorite, Cart, Recipe
 
 register = template.Library()
 
+
 @register.simple_tag
 @register.filter
 def is_favorite(request, recipe):
@@ -22,17 +23,19 @@ def listed_count(request):
 
 @register.filter
 def author_recipes_left(author):
-    if Recipe.objects.filter(author=author).count()<=3:
+    if author.recipes.count() <= 3:
         return False
     return True
 
 
 @register.simple_tag
 def author_recipes_left_count(author):
-    recipes_count = Recipe.objects.filter(author=author).count()-3
-    if recipes_count%10 == 1:
+    recipes_count = author.recipes.count() - 3
+    if recipes_count % 10 == 1:
         return f'Еще {recipes_count} рецепт...'
-    elif recipes_count%10 < 5:
+    elif recipes_count > 10 and recipes_count < 15:
+        return f'Еще {recipes_count} рецептов...'
+    elif recipes_count % 10 < 5:
         return f'Еще {recipes_count} рецепта...'
     else:
         return f'Еще {recipes_count} рецептов...'
