@@ -21,24 +21,18 @@ def listed_count(request):
     return Cart.objects.filter(user=request.user).count()
 
 
-@register.filter
-def author_recipes_left(author):
-    if author.recipes.count() <= 3:
-        return False
-    return True
-
-
 @register.simple_tag
 def author_recipes_left_count(author):
     recipes_count = author.recipes.count() - 3
     if recipes_count % 10 == 1:
-        return f'Еще {recipes_count} рецепт...'
+        result = f'Еще {recipes_count} рецепт...'
     elif recipes_count > 10 and recipes_count < 15:
-        return f'Еще {recipes_count} рецептов...'
+        result = f'Еще {recipes_count} рецептов...'
     elif recipes_count % 10 < 5:
-        return f'Еще {recipes_count} рецепта...'
+        result = f'Еще {recipes_count} рецепта...'
     else:
-        return f'Еще {recipes_count} рецептов...'
+        result = f'Еще {recipes_count} рецептов...'
+    return result
 
 
 @register.simple_tag
