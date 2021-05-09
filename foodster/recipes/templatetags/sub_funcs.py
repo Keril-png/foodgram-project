@@ -25,14 +25,13 @@ def listed_count(request):
 def author_recipes_left_count(author):
     recipes_count = author.recipes.count() - 3
     if recipes_count % 10 == 1:
-        result = f'Еще {recipes_count} рецепт...'
+        return f'Еще {recipes_count} рецепт...'
     elif recipes_count > 10 and recipes_count < 15:
-        result = f'Еще {recipes_count} рецептов...'
+        return f'Еще {recipes_count} рецептов...'
     elif recipes_count % 10 < 5:
-        result = f'Еще {recipes_count} рецепта...'
+        return f'Еще {recipes_count} рецепта...'
     else:
-        result = f'Еще {recipes_count} рецептов...'
-    return result
+        return f'Еще {recipes_count} рецептов...'
 
 
 @register.simple_tag

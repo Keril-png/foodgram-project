@@ -1,5 +1,5 @@
 
-version: '3.8'
+version: '3.3'
 
 volumes:
   postgres_data:
@@ -17,26 +17,24 @@ services:
       - ./.env
 
   django:
-    image: princekeril/api_yamdb:latest 
+    build: .
     depends_on:
       - db
     restart: always
     env_file:
       - ./.env
     volumes:
-      - static:/var/html/
-      - media:/var/html/
-      - nginx_conf:/code/nginx/
+      - .:/code/
     entrypoint: /code/entrypoint.sh
 
   nginx:
     image: nginx:1.19.0-alpine
     ports:
-      - "80:80"
+      - "127.0.0.1:1111:80"
     volumes:
-      - static:/var/html/
-      - media:/var/html/
-      - nginx_conf:/etc/nginx/conf.d/
+      - ./static:/var/static
+      - ./media:/var/media
+      - ./nginx:/etc/nginx/conf.d/
     depends_on:
       - django
     restart: always

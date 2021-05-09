@@ -4,10 +4,9 @@ class Api {
         this.apiUrl =  apiUrl;
     }
   getPurchases () {
-    return fetch(`/purchases/`, {
+    return fetch(`/purchases`, {
       headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
+        'Content-Type': 'application/json'
       }
     })
       .then( e => {
@@ -117,7 +116,7 @@ class Api {
         })
   }
     getIngredients  (text)  {
-        return fetch(`/ingredients/?query=${text}`, {
+        return fetch(`/ingredients?query=${text}`, {
             headers: {
                 'Content-Type': 'application/json'
             }
