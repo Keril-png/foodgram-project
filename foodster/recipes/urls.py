@@ -19,5 +19,6 @@ urlpatterns = [
     path('purchases/<int:recipe_id>/', views.remove_from_list, name='remove_from_list'),
     path('subscriptions/', views.profile_follow, name='profile_follow'),
     path('subscriptions/<int:author_id>/', views.profile_unfollow, name='profile_unfollow'),
+    path("accounts/profile/", views.profile, name="profile"),
     path('<str:username>/', views.author_recipes, name='author_recipes'),
 ]

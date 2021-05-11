@@ -14,9 +14,9 @@ import os
 import environ
 env = environ.Env()
 environ.Env.read_env()
-# from dotenv import find_dotenv, load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
-# load_dotenv(find_dotenv())
+load_dotenv(find_dotenv())
 
 # import platform, os
     
@@ -40,7 +40,7 @@ SECRET_KEY = 'c2_3)ub&@_g*g&h_du6_@b@(=*klljx=cid1w89k31#*km+h1g'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# ALLOWED_HOSTS = ['109.252.112.50', 'localhost',]
 
 # Application definition
 
@@ -103,12 +103,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DB_ENGINE', default='django.db.backends.postgresql'),
-        'NAME': os.environ.get('DB_NAME', default='postgres'),
-        'USER': os.environ.get('POSTGRES_USER', default='postgres'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', default='1234qwerty'),
-        'HOST': os.environ.get('DB_HOST', default='db'),
-        'PORT': os.environ.get('DB_PORT', default='5432'),
+        'ENGINE': os.getenv('DB_ENGINE', default='django.db.backends.postgresql'),
+        'NAME': os.getenv('DB_NAME', default='postgres'),
+        'USER': os.getenv('POSTGRES_USER', default='postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', default='1234qwerty'),
+        'HOST': os.getenv('DB_HOST', default='db'),
+        'PORT': os.getenv('DB_PORT', default='5432'),
     }
 }
 
@@ -155,5 +155,3 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
-# ALLOWED_HOSTS = ['109.252.112.50', 'localhost',]

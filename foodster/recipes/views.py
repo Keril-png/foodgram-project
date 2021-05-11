@@ -265,6 +265,11 @@ def remove_from_list(request, recipe_id):
     return redirect('shoplist')
 
 
+@login_required
+def profile(request):
+    return redirect(reverse('author_recipes', args=(request.user.username,)))
+    
+
 def download_pdf_ingredients(request):
     all_ingredients = union_ingredients(request)
     buffer = make_pdf(all_ingredients)

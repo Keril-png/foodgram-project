@@ -1,5 +1,5 @@
 {% load sub_funcs %}
-{% if author.username != user.username and user.is_authenticated and request.user|followed:author %}
+{% if user.is_authenticated and request.user|followed:author %}
     <button  class="button button_style_light-blue button_size_subscribe"
         name="subscribe">
         Отписаться

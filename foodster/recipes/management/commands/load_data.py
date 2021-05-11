@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from foodster.recipes.models import Ingredient
+from recipes.models import Ingredient
 import csv
 import logging
 
