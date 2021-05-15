@@ -16,6 +16,7 @@ def is_listed(request, recipe):
     return Cart.objects.filter(user=request.user, recipe=recipe).exists()
 
 
+@register.filter
 @register.simple_tag
 def listed_count(request):
     return Cart.objects.filter(user=request.user).count()

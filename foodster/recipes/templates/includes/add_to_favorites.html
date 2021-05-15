@@ -1,12 +1,8 @@
 {% load sub_funcs %}
-{% is_favorite request item as favorite %}
 {% if user.is_authenticated %}
+    {% is_favorite request item as favorite %}
     <button class="button button_style_none" name="favorites"
         {% if not favorite %}data-out="true"{% endif %}><span
         class="icon-favorite {% if favorite %}icon-favorite_active{% endif %}"></span>
     </button>
-{% else %}
-        <button class="button button_style_none" name="favorites"data-out>
-            <span class="icon-favorite"></span>
-        </button>
 {% endif %}

@@ -16,7 +16,7 @@ def index(request):
     recipe_list = Recipe.objects.order_by('-pub_date').all()
     recipe_list = tags_stuff(request, recipe_list)
 
-    paginator = Paginator(recipe_list, 10)
+    paginator = Paginator(recipe_list, 6)
 
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -42,7 +42,7 @@ def follow_index(request):
 
     follows = Follow.objects.filter(user=request.user)
     user_list = [follow.author for follow in follows]
-    paginator = Paginator(user_list, 10)
+    paginator = Paginator(user_list, 6)
 
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -61,7 +61,7 @@ def follow_index(request):
 def favorite(request):
     recipe_list = Recipe.objects.filter(favorite_recipes__user=request.user)
     recipe_list = tags_stuff(request, recipe_list)
-    paginator = Paginator(recipe_list, 10)
+    paginator = Paginator(recipe_list, 6)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
     return render(request,
@@ -100,7 +100,7 @@ def author_recipes(request, username):
     ).order_by('-pub_date').filter(author=author)
 
     recipe_list = tags_stuff(request, recipe_list)
-    paginator = Paginator(recipe_list, 10)
+    paginator = Paginator(recipe_list, 6)
 
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
@@ -213,7 +213,7 @@ def profile_follow(request):
     author = get_object_or_404(User, id=author_id)
     if not Follow.objects.filter(user=request.user, author=author).exists():
         Follow.objects.create(user=request.user, author=author)
-    return redirect('author_recipes', username=author.username)
+    return JsonResponse({"success": True})
 
 
 @login_required
@@ -222,7 +222,7 @@ def profile_unfollow(request, author_id):
     follow = Follow.objects.filter(user=request.user, author=author)
     if follow.exists():
         follow.delete()
-    return redirect('author_recipes', username=author.username)
+    return JsonResponse({"success": False})
 
 
 @login_required
@@ -233,7 +233,7 @@ def add_to_favorites(request):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if not Favorite.objects.filter(user=request.user, recipe=recipe).exists():
         Favorite.objects.create(user=request.user, recipe=recipe)
-    return redirect('index')
+    return JsonResponse({"success": True})
 
 
 @login_required
@@ -242,7 +242,7 @@ def remove_from_favorites(request, recipe_id):
     favorite = Favorite.objects.filter(user=request.user, recipe=recipe)
     if favorite.exists():
         favorite.delete()
-    return redirect('index')
+    return JsonResponse({"success": False})
 
 
 @login_required
@@ -253,7 +253,7 @@ def add_to_list(request):
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if not Cart.objects.filter(user=request.user, recipe=recipe).exists():
         Cart.objects.create(user=request.user, recipe=recipe)
-    return redirect('shoplist')
+    return JsonResponse({"success": True})
 
 
 @login_required
@@ -262,12 +262,12 @@ def remove_from_list(request, recipe_id):
     cart = Cart.objects.filter(user=request.user, recipe=recipe)
     if cart.exists():
         cart.delete()
-    return redirect('shoplist')
+    return JsonResponse({"success": False})
 
 
 @login_required
 def profile(request):
-    return redirect(reverse('author_recipes', args=(request.user.username,)))
+    return redirect(reverse('index'))
     
 
 def download_pdf_ingredients(request):

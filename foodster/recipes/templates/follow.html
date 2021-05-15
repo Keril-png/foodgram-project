@@ -7,9 +7,7 @@
 {% block header %}
     <h1 class="main__title">Подписки</h1>
 {% endblock %}
-{% block content %}
-    <main class="main container">
-        
+{% block content %}        
         <div class="card-list">
             {% for author in page %}
                 {% include "includes/user_card.html" with author=author %}
@@ -18,5 +16,4 @@
         {% if page %}
             {% include "includes/pagination.html" with items=page paginator=paginator %}
         {% endif %}
-    </main>
 {% endblock %}

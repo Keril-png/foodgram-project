@@ -7,7 +7,6 @@
 {% block title %}{{ recipe.title }}{% endblock %}
 
 {% block content %}
-    <main class="main container">
         {% csrf_token %}
         <div class="single-card" data-id="{{ recipe.pk }}"
              data-author="{{ recipe.author.pk }}">
@@ -49,10 +48,14 @@
                         {% endif %}
                     </ul>
                 </div>
-                <ul class="single-card__items">
-                        {% include 'includes/add_to_cart.html' with item=recipe %}
-                        {% include 'includes/follow_button.html' with author=recipe.author %}
-                </ul>
+
+                    <ul class="single-card__items">
+                            {% include 'includes/add_to_cart.html' with item=recipe %}
+
+                            {% if request.user != recipe.author %} 
+                                {% include 'includes/follow_button.html' with author=recipe.author %}
+                            {% endif %}
+                    </ul>
                 <div class="single-card__section">
                     <h3 class="single-card__section-title">Ингредиенты:</h3>
                     <div class="single-card__items single-card__items_column">
@@ -68,7 +71,6 @@
                 </div>
             </div>
         </div>
-    </main>
 {% endblock %}
 {% block js %}
     <script src="/static/js/components/Purchases.js"></script>

@@ -1,12 +1,12 @@
 
 {% load user_filters %}
 {% for field in form %} 
-  <div class="form-group"> 
+  <div class="form__group"> 
     <label for="{{ field.id_for_label }}" class="form__label">{{ field.label }}{% if field.field.required %}<span class="required">*</span>{% endif %}</label> 
-      <div class="col-md-6"> 
+      <div class="form__field-group"> 
  
         {{ field|addclass:"form__input" }} 
- 
+
         {% if field.help_text %} 
           <small id="{{ field.id_for_label }}-help" class="form-text text-muted">{{ field.help_text|safe }}</small> 
        

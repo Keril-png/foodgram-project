@@ -9,8 +9,8 @@ class IngredientRecipeInLine(admin.TabularInline):
 
 
 class IngredientAdmin(admin.ModelAdmin):
-    list_display = ("title", "units")
-    search_fields = ("title",)
+    list_display = ("name", "units")
+    search_fields = ("name",)
 
 
 class TagAdmin(admin.ModelAdmin):
@@ -26,8 +26,16 @@ class RecipeAdmin(admin.ModelAdmin):
     empty_value_display = "-пусто-"
 
 
-admin.site.register(Ingredient)
+class FollowAdmin(admin.ModelAdmin):
+    list_display = ("user", "author")
+
+
+class IngredientRecipeAdmin(admin.ModelAdmin):
+    list_display = ("ingredient", "recipe")
+
+
+admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(Recipe, RecipeAdmin)
-admin.site.register(IngredientRecipe)
-admin.site.register(Follow)
+admin.site.register(IngredientRecipe, IngredientRecipeAdmin)
+admin.site.register(Follow, FollowAdmin)
 admin.site.register(Tag, TagAdmin)

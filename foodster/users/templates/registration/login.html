@@ -8,8 +8,7 @@
     <h1 class="main__title">Войти</h1>
 {% endblock %}
 {% block content %}
-    <main class="main container">
-        <div class="form-container">
+        <span class="form-container">
             <form class="form" method="post" action="{% url 'login' %}">
                 {% csrf_token %}
                 {% include 'includes/user_form.html' %}
@@ -18,7 +17,6 @@
                     <a href="{% url "password_reset" %}" class="form__forgot-link">Восстановить пароль</a>
                 </div>
             </form>
-        </div>
-    </main>
+        </span>
 
 {% endblock %}
