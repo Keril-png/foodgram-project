@@ -120,11 +120,13 @@ def author_recipes(request, username):
 
 @login_required
 def new_recipe(request):
+    
     form = RecipeForm(request.POST or None, files=request.FILES or None)
-
-    if form.is_valid():
-        new = save_recipe(request, form)
-        return redirect('index')
+    if request.method == 'POST':
+        if form.is_valid():
+            new = save_recipe(request, form)
+            return redirect('index')
+        form = RecipeForm(request.POST or None, files=request.FILES or None)
 
     return render(
         request,
@@ -263,6 +265,15 @@ def remove_from_list(request, recipe_id):
     if cart.exists():
         cart.delete()
     return JsonResponse({"success": False})
+
+
+@login_required
+def remove_from_cart(request, recipe_id):
+    recipe = get_object_or_404(Recipe, id=recipe_id)
+    cart = Cart.objects.filter(user=request.user, recipe=recipe)
+    if cart.exists():
+        cart.delete()
+    return redirect(reverse('shoplist'))
 
 
 @login_required
