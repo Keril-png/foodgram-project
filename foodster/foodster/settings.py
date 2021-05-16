@@ -155,3 +155,15 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+#  подключаем движок filebased.EmailBackend
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+# указываем директорию, в которую будут складываться файлы писем
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+# DEFAULT_FROM_EMAIL = 'Foodster@gmail.com'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'kirabramofff@gmail.com'
+# EMAIL_HOST_PASSWORD = 'KirabR_2001'
+# EMAIL_USE_TLS = True
