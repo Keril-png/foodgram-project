@@ -12,6 +12,15 @@ class Ingredient(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    'name',
+                    'units'],
+                name='unique ingredient'),
+        ]
+
 
 class Tag(models.Model):
     name = models.CharField(max_length=255, verbose_name='tagname')
@@ -29,7 +38,7 @@ class Recipe(models.Model):
         related_name='recipes',
         verbose_name='author')
     title = models.CharField(max_length=64, verbose_name='title')
-    image = models.ImageField(blank=True, null=True, verbose_name='image')
+    image = models.ImageField(blank=True, null=False, verbose_name='image')
     description = models.TextField(verbose_name='description')
     ingredients = models.ManyToManyField(
         Ingredient,

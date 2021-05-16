@@ -10,7 +10,6 @@
 
 
 {% block content %}
-    <main class="main container">
         {% csrf_token %}
         <div class="card-list card-list_column">
             <ul class="shopping-list">
@@ -37,7 +36,6 @@
             {% endif %}
 
         </div>
-    </main>
 {% endblock %}
 {% block js %}
     <script src="/static/js/config/config.js"></script>

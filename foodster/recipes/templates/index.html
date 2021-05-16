@@ -7,11 +7,8 @@
     <h1 class="main__title">Все рецепты</h1>
     {% include "includes/tags.html"  %}
 {% endblock %}
-
-
 {% block content %}
-    <main class="main container">
-        
+
         <div class="card-list">
             {% for item in page %}
                 {% include "includes/item_card.html" with item=item %}
@@ -20,5 +17,5 @@
         {% if page %}
             {% include "includes/pagination.html" with items=page paginator=paginator %}
         {% endif %}
-    </main>
+    
 {% endblock %}

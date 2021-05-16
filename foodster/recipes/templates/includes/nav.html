@@ -22,9 +22,11 @@
                        class="nav__link link">Избранное</a>
                 </li>
                 <li class="nav__item{% if request.resolver_match.url_name == 'shoplist' %} nav__item_active{% endif %}">
-                    <a href="{% url "shoplist" %}" 
-                       class="nav__link link">Список покупок</a> 
-                       <span class="badge badge_style_blue nav__badge" id="counter">{% listed_count request %}</span></li>
+                    <a href="{% url "shoplist" %}" class="nav__link link">Список покупок</a> 
+                    
+                        <span class="badge badge_style_blue nav__badge" id="counter">{% if request.user.user_purchases.count > 0 %}{% listed_count request %}{% endif %}</span>
+                    
+                </li>
                 {% endif %}
             </ul>
             <ul class="nav__items list">

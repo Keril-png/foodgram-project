@@ -3,7 +3,9 @@
 {% author_recipes_left_count author as recipes_count %}
 <div class="card-user" data-author="7091">
     <div class="card-user__header">
-        <h2 class="card-user__title">{{author.username}}</h2>
+        <a href="{% url "author_recipes" author.username %}">
+        <h2  class="card-user__title">{{author.username}}</h2>
+        </a>
     </div>
     <div class="card-user__body">
         <ul class="card-user__items">

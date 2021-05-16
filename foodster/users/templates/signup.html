@@ -9,8 +9,7 @@
 
 {% block content %}
     {% load user_filters %}
-    <main class="main container">
-        <div class="form-container">
+        <span class="form-container">
             <form class="form" method="post" action="{% url 'signup' %}">
                 {% csrf_token %}
                 {% include 'includes/user_form.html' %}
@@ -19,7 +18,6 @@
                     </button>
                 </div>
             </form>
-        </div>
-    </main>
+        </span>
 
 {% endblock %}

@@ -1,13 +1,15 @@
 {% load sub_funcs %}
 {% if user.is_authenticated and request.user|followed:author %}
+    <a href="{{ request.get_full_path }}">
     <button  class="button button_style_light-blue button_size_subscribe"
         name="subscribe">
-        Отписаться
+        Отписаться от автора
     </button>
+    </a>
 {% else %}
-    <button class="button button_style_light-blue button_size_subscribe button_style_blue"
-        name="subscribe" data-out="true">
-        Подписаться
+    <button class="button button_style_light-blue button_size_subscribe"
+        name="subscribe" data-out>
+        Подписаться на автора
     </button>
 {% endif %}
 
