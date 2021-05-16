@@ -65,3 +65,8 @@ def tags_filter(request, tag):
     else:
         new_request.appendlist('tag', tag)
     return new_request.urlencode()
+
+
+@register.filter
+def addclass(field, css):
+    return field.as_widget(attrs={"class": css})

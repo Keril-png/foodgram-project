@@ -14,7 +14,7 @@
             <div class="form__group">
                 <label for="id_name" class="form__label">Название рецепта</label>
                 <div class="form__field-group">
-                    <input type="text" id="id_name" name="title" class="form__input">
+                    <input type="text" id="id_name" name="title" class="form__input" {% if form.title.value != None %}value={{ form.title.value }} {% endif %} >
                     <span class="form__error">{{ form.title.errors }}</span>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 <div class="form__field-group">
                     <div class="form__field-group-ingredientes">
                         <div class="form__dropdown">
-                            <input type="text" id="nameIngredient" class="form__input">
+                            <input type="text" id="nameIngredient" class="form__input" >
                             <div class="form__dropdown-items"></div>
                         </div>
                         <input type="number" id="cantidad" class="form__input" min="0">
@@ -56,7 +56,7 @@
             <div class="form__group">
                 <label for="id_time" class="form__label">Время приготовления</label>
                 <div class="form__field-group form__field-group_time">
-                    <input type="text" id="id_time" name="cooktime" class="form__input">
+                    <input type="text" id="id_time" name="cooktime" class="form__input" {% if form.cooktime.value != None %}value={{ form.cooktime.value }} {% endif %}>
                     <label for="id_time" class="form__label">минут</label>
                     <span class="form__error">{{ form.cooktime.errors }}</span>
                 </div>
@@ -64,15 +64,15 @@
             <div class="form__group">
                 <label for="id_description" class="form__label">Описание</label>
                 <div class="form__field-group">
-                    <textarea name="description" id="id_description" rows="8" class="form__textarea"></textarea>
+                    <textarea name="description" id="id_description" rows="8" class="form__textarea" value={{ form.description.value }}> </textarea>
                     <span class="form__error">{{ form.description.errors }}</span>
                 </div>
             </div>
             <div class="form__group">
                 <span class="form__label">Загрузить фото</span>
                 <div class="form__field-group">
-                    <input type="file" name="image" id="id_file">
-                    <span class="form__error">{{ form.file.errors }}</span>
+                    <input type="file" name="image" id="id_file" value={{ form.image.value }}>
+                    <span class="form__error">{{ form.image.errors }}</span>
                 </div>
             </div>
 
@@ -84,7 +84,7 @@
                         {% endif %}
                 </div>
             </form>
-
+            
         </span>
 {% endblock %}
 {% block js %}
