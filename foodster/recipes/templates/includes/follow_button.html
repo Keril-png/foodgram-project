@@ -1,15 +1,25 @@
 {% load sub_funcs %}
-{% if user.is_authenticated and request.user|followed:author %}
-    <a href="{{ request.get_full_path }}">
-    <button  class="button button_style_light-blue button_size_subscribe"
-        name="subscribe">
-        Отписаться от автора
-    </button>
-    </a>
+{% if user.is_authenticated %}
+    {% if request.user|followed:author %}
+        <a href="{{ request.get_full_path }}">
+        <button  class="button button_style_light-blue button_size_subscribe"
+            name="subscribe">
+            Отписаться от автора
+        </button>
+        </a>
+    {% else %}
+        <button class="button button_style_light-blue button_size_subscribe"
+            name="subscribe" data-out>
+            Подписаться на автора
+        </button>
+    {% endif %}
 {% else %}
-    <button class="button button_style_light-blue button_size_subscribe"
-        name="subscribe" data-out>
-        Подписаться на автора
-    </button>
+    <a href="{% url "login" %}">
+        <button class="button button_style_light-blue button_size_subscribe"
+            name="subscribe" data-out>
+            Подписаться на автора
+        </button>
+    </a>
 {% endif %}
+
 
