@@ -45,7 +45,6 @@ ALLOWED_HOSTS = ['127.0.0.1','178.154.231.38', 'localhost',]
 # Application definition
 
 INSTALLED_APPS = [
-    'send_email.apps.SendEmailConfig',
     'users',
     'recipes',
     'django.contrib.admin',
