@@ -40,7 +40,7 @@ SECRET_KEY = 'c2_3)ub&@_g*g&h_du6_@b@(=*klljx=cid1w89k31#*km+h1g'
 DEBUG = True
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['178.154.231.38', 'localhost',]
+ALLOWED_HOSTS = ['127.0.0.1','178.154.231.38', 'localhost',]
 
 # Application definition
 
@@ -135,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU' 
 
 TIME_ZONE = 'UTC'
 
@@ -157,13 +157,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 #  подключаем движок filebased.EmailBackend
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # указываем директорию, в которую будут складываться файлы писем
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+# EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
-# DEFAULT_FROM_EMAIL = 'Foodster@gmail.com'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = 'kirabramofff@gmail.com'
-# EMAIL_HOST_PASSWORD = 'KirabR_2001'
-# EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Foodster@gmail.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'kirabramofff@gmail.com'
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
+EMAIL_USE_TLS = True

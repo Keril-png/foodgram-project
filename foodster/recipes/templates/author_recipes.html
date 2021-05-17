@@ -11,19 +11,20 @@
 {% block content %}
     {% load sub_funcs %}
         {% csrf_token %}
-        {% if request.user != author %}
-        <div class="author-subscribe" data-author="{{ author.id }}">
-            <p style="padding: 0 0 2em 0;">
-                        {% include 'includes/follow_button.html' with author=author %}
-            </p>
-        </div>
+        
+        {% if user.is_authenticated and request.user != author %}
+            <div class="author-subscribe" data-author="{{ author.id }}">
+                <p style="padding: 0 0 2em 0;">
+                            {% include 'includes/follow_button.html' with author=author %}
+                </p>
+            </div>
         {% endif %}
         <div class="card-list">
             {% for item in page %}
                 {% include "includes/item_card.html" with item=item %}
             {% endfor %}
         </div>
-        {% if page %}
+        {% if page and paginator.count >= 6 %}
             {% include "includes/pagination.html" with items=page paginator=paginator %}
         {% endif %}
 {% endblock %}

@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.cache import cache_page
 from .forms import RecipeForm
 from django.http import JsonResponse, FileResponse
-from .utils import save_recipe, union_ingredients, tags_stuff, used_tags
+from .utils import save_recipe, union_ingredients, tags_stuff, used_tags, get_ingredients
 from .pdfwork import make_pdf
 from django.urls import reverse
 import json
@@ -123,7 +123,7 @@ def new_recipe(request):
     
     form = RecipeForm(request.POST or None, files=request.FILES or None)
     if request.method == 'POST':
-        if form.is_valid():
+        if form.is_valid() and len(get_ingredients(request))>0:
             new = save_recipe(request, form)
             return redirect('index')
         form = RecipeForm(request.POST or None, files=request.FILES or None)

@@ -13,7 +13,7 @@
                 {% include "includes/user_card.html" with author=author %}
             {% endfor %}
         </div>
-        {% if page %}
+        {% if page and paginator.count >= 6 %}
             {% include "includes/pagination.html" with items=page paginator=paginator %}
         {% endif %}
 {% endblock %}

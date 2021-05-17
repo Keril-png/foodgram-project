@@ -64,7 +64,7 @@
             <div class="form__group">
                 <label for="id_description" class="form__label">Описание</label>
                 <div class="form__field-group">
-                    <textarea name="description" id="id_description" rows="8" class="form__textarea" value={{ form.description.value }}> </textarea>
+                    <textarea name="description" id="id_description" rows="8" class="form__textarea" >{% if form.cooktime.value != None %}{{ form.description.value }}{% endif %}</textarea>
                     <span class="form__error">{{ form.description.errors }}</span>
                 </div>
             </div>
