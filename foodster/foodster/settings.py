@@ -161,10 +161,10 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # указываем директорию, в которую будут складываться файлы писем
 # EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
-DEFAULT_FROM_EMAIL = 'kirabramofff@gmail.com'
+DEFAULT_FROM_EMAIL = 'kirabramoffff@gmail.com'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'kirabramofff@gmail.com'
-SERVER_EMAIL = 'kirabramofff@gmail.com'
+EMAIL_HOST_USER = 'kirabramoffff@gmail.com'
+SERVER_EMAIL = 'kirabramoffff@gmail.com'
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_PASSWORD')
 EMAIL_USE_TLS = True
