@@ -11,7 +11,6 @@ from django.urls import reverse
 import json
 
 
-@cache_page(20)
 def index(request):
     recipe_list = Recipe.objects.order_by('-pub_date').all()
     recipe_list = tags_stuff(request, recipe_list)
