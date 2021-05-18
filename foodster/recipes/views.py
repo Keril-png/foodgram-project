@@ -142,6 +142,7 @@ def new_recipe(request):
 
 @login_required()
 def edit_recipe(request, recipe_id):
+    ingredients_exist = True
     recipe = get_object_or_404(Recipe, id=recipe_id)
     if not request.user.is_staff and recipe.author != request.user:
         return redirect(
@@ -156,6 +157,7 @@ def edit_recipe(request, recipe_id):
         new = save_recipe(request, form)
         return redirect('index')
 
+    ingredients_exist = False
     edit = True
 
     return render(
@@ -166,7 +168,7 @@ def edit_recipe(request, recipe_id):
             'edit': edit,
             'all_tags': Tag.objects.all(),
             'recipe': recipe,
-            'ingredients_count': len(get_ingredients(request))==0,
+            'ingredients_count': not ingredients_exist,
         }
     )
 
