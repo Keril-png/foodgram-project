@@ -133,6 +133,7 @@ def new_recipe(request):
         {
             'form': form,
             'all_tags': Tag.objects.all(),
+            'ingredients_count': len(get_ingredients(request)),
         },
     )
 
@@ -149,7 +150,7 @@ def edit_recipe(request, recipe_id):
         )
     form = RecipeForm(request.POST or None, files=request.FILES or None,
                       instance=recipe)
-    if form.is_valid():
+    if form.is_valid() and len(get_ingredients(request))>0:
         new = save_recipe(request, form)
         return redirect('index')
 
@@ -163,6 +164,7 @@ def edit_recipe(request, recipe_id):
             'edit': edit,
             'all_tags': Tag.objects.all(),
             'recipe': recipe,
+            'ingredients_count': len(get_ingredients(request)),
         }
     )
 

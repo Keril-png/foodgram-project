@@ -3,20 +3,35 @@
 {% load static %}
 {% block main_css %}/static/pages/form.css{% endblock %}
 {% block title %}Log in{% endblock %}
-
 {% block header %}
     <h1 class="main__title">Войти</h1>
 {% endblock %}
 {% block content %}
-        <span class="form-container">
-            <form class="form" method="post" action="{% url 'login' %}">
+        <div class="form-container">
+            <form class="form" method="post">
                 {% csrf_token %}
-                {% include 'includes/user_form.html' %}
+                <div class="form__group">
+                    <label for="{{ form.username.id_for_label }}" class="form__label">Имя пользователя</label>
+                    <div class="form__field-group">
+                        {{ form.username|addclass:"form__input" }}
+
+                        <span class="form__error">{{ form.username.errors }}</span>
+                    </div>
+                </div>
+                <div class="form__group">
+                    <label for="{{ form.password.id_for_label }}"
+                           class="form__label">Пароль</label>
+                    <div class="form__field-group">
+                        {{ form.password|addclass:"form__input" }}
+
+                        <span class="form__error">{% if form.errors %}Не получается войти. Проверьте имя пользователя или пароль.{% endif %}</span>
+                    </div>
+                </div>
                 <div class="form__footer">
                     <button class="button button_style_blue">Войти</button>
                     <a href="{% url "password_reset" %}" class="form__forgot-link">Восстановить пароль</a>
                 </div>
             </form>
-        </span>
+        </div>
 
 {% endblock %}
