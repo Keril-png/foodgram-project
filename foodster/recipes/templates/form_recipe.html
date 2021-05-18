@@ -73,8 +73,14 @@
                 <div class="form__field-group">
                     <label for="id_file" class="form__file-button">Выбрать файл</label>
                     <input type="file" class="form__file" name="image" id="id_file">
+                    <span class="upload-path"></span>
                     <span class="form__error">{{ form.image.errors }}</span>
                 </div>
+                {% comment %} <div class="browse-wrap">
+                    <div class="title">Choose a file to upload</div>
+                    <input type="file" name="upload" class="upload" title="Choose a file to upload">
+                </div>
+                <span class="upload-path"></span> {% endcomment %}
             </div>
 
                 <div class=" form__footer">
