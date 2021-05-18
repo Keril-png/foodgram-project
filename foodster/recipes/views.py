@@ -119,21 +119,23 @@ def author_recipes(request, username):
 
 @login_required
 def new_recipe(request):
-    
+    ingredients_exist = True
     form = RecipeForm(request.POST or None, files=request.FILES or None)
     if request.method == 'POST':
         if form.is_valid() and len(get_ingredients(request))>0:
             new = save_recipe(request, form)
             return redirect('index')
         form = RecipeForm(request.POST or None, files=request.FILES or None)
+        ingredients_exist = False
 
+    
     return render(
         request,
         'form_recipe.html',
         {
             'form': form,
             'all_tags': Tag.objects.all(),
-            'ingredients_count': len(get_ingredients(request)),
+            'ingredients_count': not ingredients_exist,
         },
     )
 
@@ -164,7 +166,7 @@ def edit_recipe(request, recipe_id):
             'edit': edit,
             'all_tags': Tag.objects.all(),
             'recipe': recipe,
-            'ingredients_count': len(get_ingredients(request)),
+            'ingredients_count': len(get_ingredients(request))==0,
         }
     )
 
